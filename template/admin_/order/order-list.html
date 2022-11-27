@@ -1,0 +1,67 @@
+<table id="example" class="table table-striped table-bordered first " style="width:100%">  <thead>
+    <tr>
+      <th>#</th>
+      <th>Order ID</th>
+      <th>User</th>
+      <th>Order Date</th>
+      <th>Items</th>
+      <th>Payment Type</th>
+      <th>Totel Price</th>
+      <th>Coupen</th>
+      <th>Payment</th>
+      <th>Order</th>
+      <th>Update</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in order_list %}
+    <tr title="double click Order Deatails section" style="cursor: pointer;"
+      ondblclick="db_order_section({{i.pk}}, {{i.order_status.pk}} , {{i.order.pk}}) ">
+      <td>{{forloop.counter}}</td>
+      <td>{{i.order.orders_id}}</td>
+      <td>{{i.order.user.fullname}}</td>
+      <td>{{i.order.order_date}}</td>
+      <td>{{i.order.totel_quantity}}</td>
+      <td>{{i.payment_method | title}}</td>
+      <td>₹{{i.order.totel_payment_price}}</td>
+      <td>
+        {% if i.order.coupen_active %}
+        <span class="text-success">Active</span>
+        {% else %}
+        Deactive
+        {% endif %}
+      </td>
+      <td>
+        {% if i.payment_status == 'PENDING' %}
+        <span class="text-danger">{{i.payment_status | title}}</span>
+        {% else %}
+        <span class="text-success">{{i.payment_status | title}}</span>
+        {% endif %}
+      </td>
+      <td>
+        {% if i.order_status.current_status == 1 %}
+        Confrimed
+        {% elif i.order_status.current_status == 2 %}
+        Shipped
+        {% elif i.order_status.current_status == 3 %}
+        out for delivery
+        {% elif i.order_status.current_status == 4 %}
+        <span class="text-success">delivered</span>
+        {% else %}
+        <span class="text-danger">Cancelled</span>
+        {% endif %}
+      </td>
+
+      <td>
+        {% if i.order_status.Cancelled != True %}
+        <a class="ml-1" href="javascript:void(0)" title="Edit" data-toggle="tooltip"><i class="fa fa-edit color-muted"
+          data-toggle="modal" data-target="#addatatus_Model-{{i.pk}}"></i>
+      </a>
+        {% endif %}
+      </td>
+      {% include 'admin_/order/add-status.html' %}
+
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

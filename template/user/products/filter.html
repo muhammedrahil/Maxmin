@@ -1,0 +1,104 @@
+<!-- Start Single Sidebar Widget -->
+<div class="sidebar-single-widget">
+    <h6 class="sidebar-title">CATEGORIES</h6>
+    <div class="sidebar-content">
+        <ul class="sidebar-menu">
+            <input type="text" value="{{maincategory}}" hidden id="main_c_id">
+
+            {% for c in subcategory %}
+            <li>
+                <label class="checkbox-default" for="brakeParts">
+                    <input class="filter-checkbox" data-filter="subcategory" value="{{c.id}}" type="checkbox"
+                        id="brakeParts">
+                    <span>{{c.category| title}}</span>
+                </label>
+            </li>
+            {% endfor %}
+
+        </ul>
+    </div>
+</div> <!-- End Single Sidebar Widget -->
+
+<!-- Start Single Sidebar Widget -->
+<div class="sidebar-single-widget">
+    <h6 class="sidebar-title">FILTER BY PRICE</h6>
+    <form action="" id="price">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-lg-4">
+                <input type="number" name="min" id="" class="border form-control" placeholder="MIN">
+            </div>
+            <div class="col-lg-4">
+                <input type="number" name="max" id="" class="border form-control" placeholder="MAX">
+            </div>
+            <div class="col-lg-4">
+                <input type="submit" name="" id="" class="border form-control shadow-sm rounded-pill" value="GO">
+
+            </div>
+        </div>
+    </form>
+</div> <!-- End Single Sidebar Widget -->
+
+<!-- Start Single Sidebar Widget -->
+<div class="sidebar-single-widget">
+    <h6 class="sidebar-title">Brand</h6>
+    <div class="sidebar-content">
+        <div class="filter-type-select">
+            <ul>
+                {% for brand in brands %}
+                <li>
+                    <label class="checkbox-default" for="brakeParts">
+                        <input class="filter-checkbox" data-filter="brand" value="{{brand.id}}" type="checkbox"
+                            id="brakeParts">
+                        <span>{{brand.title| title}}</span>
+                    </label>
+                </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+    </div>
+</div> <!-- End Single Sidebar Widget -->
+
+<!-- Start Single Sidebar Widget -->
+<div class="sidebar-single-widget">
+    <h6 class="sidebar-title">SIZE</h6>
+    <div class="sidebar-content">
+        <div class="filter-type-select">
+            <ul>
+                {% for c in size %}
+                <li>
+                    <label class="checkbox-default" for="black">
+                        <input class="filter-checkbox" data-filter="size" value="{{c.id}}" type="checkbox" id="black">
+                        <span>{{c.Size| title}}</span>
+                    </label>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div> <!-- End Single Sidebar Widget -->
+
+<!-- Start Single Sidebar Widget -->
+<div class="sidebar-single-widget">
+    <h6 class="sidebar-title">COLOR</h6>
+    <div class="sidebar-content">
+        <div class="filter-type-select">
+            <ul>
+                {% for c in color %}
+                <li>
+                    <label class="checkbox-default ">
+                        <input class="filter-checkbox" data-filter="color" value="{{c.id}}" type="checkbox" id="color">
+                        <span>
+                            <p style="color: {{c.color_code}};">{{c.title| title}}</p>
+                        </span>
+                    </label>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div> <!-- End Single Sidebar Widget -->
+
+
+</div> <!-- End Sidebar Area -->

@@ -1,0 +1,34 @@
+<table id="example" class="table table-striped table-bordered first " style="width:100%">  
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Text</th>
+      <th>Active</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in cash_on_delivery_text %}
+    <tr>
+      <td>{{forloop.counter}}</td>  
+      <td>{{i.text | title}}</td>  
+      <td>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+                onclick="cash_on_delivery_text_is_active({{i.pk}})" {% if i.is_active %} checked {% endif %}>
+        </div>
+    </td>
+    <td class=" ">
+        <a class="ml-1" href="javascript:void(0)" title="Edit" data-toggle="tooltip"><i
+                class="fa fa-edit color-muted" data-toggle="modal" data-target="#edit_text_Modal-{{i.pk}}"></i>
+        </a>
+
+        <a href="#" onclick="cash_on_delivery_text_delete({{i.pk}})" class="ml-1" data-toggle="tooltip"
+            data-placement="top" title="Delete"><i class="fa fa-trash color-danger"></i></a>
+    </td>
+    {% include 'admin_/cash_on_delivery_text/edit-cash_on_delivery_text.html' %}
+
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

@@ -1,0 +1,148 @@
+
+
+  <!-- Start Product Content Tab Section -->
+  <div class="product-details-content-tab-section section-top-gap-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="product-details-content-tab-wrapper" data-aos="fade-up" data-aos-delay="0">
+
+                    <!-- Start Product Details Tab Button -->
+                    <ul class="nav tablist product-details-content-tab-btn d-flex justify-content-center">
+                        <li><a class="nav-link active" data-bs-toggle="tab" href="#description">
+                                Description
+                            </a></li>
+                        <li><a class="nav-link" data-bs-toggle="tab" href="#specification">
+                                Specification
+                            </a></li>
+                        <li><a class="nav-link" data-bs-toggle="tab" href="#review">
+                                Reviews ({{producy_review_count}})
+                            </a></li>
+                    </ul> <!-- End Product Details Tab Button -->
+
+                    <!-- Start Product Details Tab Content -->
+                    <div class="product-details-content-tab">
+                        <div class="tab-content">
+                            <!-- Start Product Details Tab Content Singel -->
+                            <div class="tab-pane active show" id="description">
+                                <div class="single-tab-content-item">
+                                  <p>{{product.product.description}}</p>
+                                </div>
+                            </div> <!-- End Product Details Tab Content Singel -->
+                            <!-- Start Product Details Tab Content Singel -->
+                            <div class="tab-pane" id="specification">
+                                <div class="single-tab-content-item">
+                                    <table class="table table-bordered mb-20">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">Color</th>
+                                                <td>{{product.product_color.title}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Category</th>
+                                                <td>{% if product.product.main_category == '1' %}
+                                                    Men's {{product.product.category.category}}
+                            
+                                                    {% elif product.product.main_category == '2' %}
+                                                    Women's {{product.product.category.category}}
+                            
+                                                    {% else %}
+                                                    Kid's {{product.product.category.category}}
+                                                    {% endif %}</td>
+                                            <tr>
+                                                <!-- <th scope="row">Properties</th>
+                                                <td>Short Dress</td> -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> <!-- End Product Details Tab Content Singel -->
+                            <!-- Start Product Details Tab Content Singel -->
+                            <div class="tab-pane" id="review">
+                                <div class="single-tab-content-item">
+                                    <!-- Start - Review Comment -->
+                                    <ul class="comment">
+                                        {% for o in producy_review %}
+                                        
+                                       
+                                        <!-- Start - Review Comment list-->
+                                        <li class="comment-list">
+                                            <div class="comment-wrapper">
+                                                <div class="comment-img">
+                                                    {% if o.product_image %}
+                                                    <img src="{{o.product_image.url}}" alt="">
+                                                    {% endif %}
+                                                </div>
+                                                <div class="comment-content">
+                                                    <div class="comment-content-top">
+                                                        <div class="comment-content-left">
+                                                            <h6 class="comment-name">{{o.created_id.fullname}}</h6>
+                                                            <ul class="review-star">
+                                
+                                                                {% if o.rating == 1 %}
+                                                                <span class="fa fa-star checked"></span>
+                                                                 <span class="fa fa-star "></span>
+                                                                <span class="fa fa-star "></span>
+                                                                <span class="fa fa-star "></span>
+                                                                <span class="fa fa-star "></span>
+                                
+                                                                {% endif %}
+                                                                {% if o.rating == 2 %}
+                                                                <span class="fa fa-star checked"></span>
+                                                                <span class="fa fa-star checked"></span>
+                                                                <span class="fa fa-star "></span>
+                                                                <span class="fa fa-star "></span>
+                                                                <span class="fa fa-star "></span>
+                                
+                                                                {% endif %}
+                                                                {% if o.rating == 3 %}
+                                                                <span class="fa fa-star checked"></span>
+                                                                <span class="fa fa-star checked"></span>
+                                                                <span class="fa fa-star checked"></span>
+                                                                <span class="fa fa-star "></span>
+                                                                <span class="fa fa-star "></span>
+                                
+                                                                {% endif %}
+                                                                {% if o.rating == 4 %}
+                                                                <span class="fa fa-star checked"></span>
+                                                                <span class="fa fa-star checked"></span>
+                                                                <span class="fa fa-star checked"></span>
+                                                                <span class="fa fa-star checked"></span>
+                                                                <span class="fa fa-star "></span>
+                                
+                                                                {% endif %}
+                                                                {% if o.rating == 5 %}
+                                                                <span class="fa fa-star checked"></span>
+                                                                <span class="fa fa-star checked"></span>
+                                                                <span class="fa fa-star checked"></span>
+                                                                <span class="fa fa-star checked"></span>
+                                                                <span class="fa fa-star checked"></span>
+                                                                {% endif %}
+                                                            </ul>
+                                                        </div>
+                                                        <div class="comment-content-right">
+                                                            <!-- <a href="#"><i class="fa fa-reply"></i>Reply</a> -->
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="para-content">
+                                                        <p>{{o.subject}}</p>
+                                                        <p>{{o.description}}</p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           
+                                        </li> <!-- End - Review Comment list-->
+                                        <!-- Start - Review Comment list-->
+                                        {% endfor %}
+                                    </ul> <!-- End - Review Comment -->       
+                                </div>
+                            </div> <!-- End Product Details Tab Content Singel -->
+                        </div>
+                    </div> <!-- End Product Details Tab Content -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- End Product Content Tab Section -->

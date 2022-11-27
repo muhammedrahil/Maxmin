@@ -1,0 +1,89 @@
+{% extends "admin_/base.html" %}
+{% load static %}
+
+{% block static %}
+<link rel="stylesheet" type="text/css" href="{% static 'adm/assets/vendor/datatables/css/dataTables.bootstrap4.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'adm/assets/vendor/datatables/css/buttons.bootstrap4.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'adma/assets/vendor/datatables/css/select.bootstrap4.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'adm/assets/vendor/datatables/css/fixedHeader.bootstrap4.css' %}">
+{% endblock %}
+{% block pagetitle %}Order Id : {{order_instence.orders_id}} {% endblock %}
+    
+{% block content %}
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-5">
+        <div class="card-body border-top bg-light mb-2 shadow rounded ">
+            <h3 class="font-weight-bold">{{order_instence.delivery_address.name}}</h3>
+            <p>{{order_instence.delivery_address.address}} {{order_instence.delivery_address.locality}}
+                {{order_instence.delivery_address.city_district_town}} {{order_instence.delivery_address.landmark}}
+                {{order_instence.delivery_address.state}}
+                <br> - {{order_instence.delivery_address.pincode}}, {{order_instence.delivery_address.state}}
+            </p>
+            <h4 class="font-weight-bold">Phone number : +91 {{order_instence.delivery_address.phone_no}} </h4>
+            <p>Order Confrimation Email : {{order_instence.order_confirmation_email}}</p>
+        </div>
+        <div class="card-body border-top bg-light mb-2 shadow rounded ">
+            <h2 class="font-weight-bold">Order Deatails</h2>
+            <h3 class="font-weight-bold">Order Date : {{order_instence.order_date}} </h3>
+            <h3 class="font-weight-bold">Totel Payment : ₹{{order_instence.totel_payment_price}} </h3>
+
+            {% if order_status_instence.current_status == 1 %}
+            <h2 class="font-weight-bold text-success">Confrimed</h2>
+            <h4 class="font-weight-bold ">{{order_status_instence.order_confirmed_date}}</h4>
+
+            {% elif order_status_instence.current_status == 2 %}
+            <h2 class="font-weight-bold text-success"> Shipped</h2>
+            <h4 class="font-weight-bold ">{{order_status_instence.Shipped_date}}</h4>
+
+            {% elif order_status_instence.current_status == 3 %}
+            <h2 class="font-weight-bold text-success"> out for delivery</h2>
+            <h4 class="font-weight-bold ">{{order_status_instence.out_for_delivery_date}}</h4>
+
+            {% elif order_status_instence.current_status == 4 %}
+            <h2 class="font-weight-bold text-success"> delivered</h2>
+            <h4 class="font-weight-bold ">{{order_status_instence.out_for_delivery_date}}</h4>
+            {% else %}
+            <h2 class="font-weight-bold text-danger">Cancelled</h2>
+            <h4 class="font-weight-bold ">{{order_status_instence.cancelled_date}}</h4>
+            <p>Cancel Reasons : {{order_status_instence.cancelReasons.reasons}} <br>
+                Cancel Description : {{order_status_instence.cancel_reason_descrition}}
+            </p>
+            {% endif %}
+        </div>
+        <div class="row">
+            {% include 'admin_/order/order-deatails/product-list.html' %}
+            {% include 'admin_/order/order-deatails/price-list.html' %}
+        </div>
+
+        <div class="card-body border-top bg-light mb-2 shadow rounded ">
+            <h3 class="font-weight-bold">Payment Deatails</h3>
+            <p>Payment Method : {{payment_instence.payment_method}}</p>
+            <p>Payment Order Id : {{payment_instence.payment_order_id}} </p>
+            <p>Payment Id : {{payment_instence.payment_id}}</p>
+            {% if payment_instence.payer_id != none %}
+            <p>Payment Payer Id : {{payment_instence.payer_id}}</p>
+            {% endif %}
+            {% if payment_instence.signature != none %}
+            <p>Payment signature : {{payment_instence.signature}}</p>
+            {% endif %}
+            <p>Payment Date : {{payment_instence.payment_date}}</p>
+            <p>Payment Price : <span class="font-weight-bold text-dark">₹{{payment_instence.payment_price}}</span></p>
+            <p>Payment Status : {% if payment_instence.payment_status == 'PENDING' %}
+                <span class="text-danger">{{payment_instence.payment_status}}</span>
+                {% else %}
+                <span class="text-success">{{payment_instence.payment_status}}</span>
+                {% endif %}
+            </p>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+
+<script>
+
+</script>
+
+{% endblock %}

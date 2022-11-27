@@ -1,0 +1,109 @@
+{% extends "user/base-layout.html" %}
+{% load static %}
+
+{% block static %}
+<style>
+    .checked {
+        color: orange;
+    }
+</style>
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="container" style="height: 70px;"></div>
+
+
+
+{% include 'user/single-product-section/product-detail.html' %}
+
+
+{% include 'user/single-product-section/product-content.html' %}
+
+
+
+<!-- Start Product Default Slider Section -->
+<div class="product-default-slider-section section-top-gap-100 section-fluid">
+    <!-- Start Section Content Text Area -->
+    <div class="section-title-wrapper" data-aos="fade-up" data-aos-delay="0">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-content-gap">
+                        <div class="secton-content">
+                            <h3 class="section-title">RELATED PRODUCTS </h3>
+                            <p>Browse the collection of our related products.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'user/single-product-section/product-related.html' %}
+
+</div>
+<!-- End Product Default Slider Section -->
+{% include 'user/single-product-section/add-to-cart.html' %}
+{% endblock %}
+
+{% block script %}
+
+<script>
+
+    function sizeqty(prod_id) {
+        $.ajax({
+            type: "POST",
+            url: "{% url 'cart:quantity' %}",
+            data: {
+                prod_id,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                dataType: "json",
+            },
+            success: function (res) {
+                $("#qty_div").html(res.data);
+            },
+            failure: function () {
+            }
+        });
+    }
+
+
+
+    $('#add_to_cart').on('submit', function (e) {
+        var size = $(".size:checked").val();
+        var qty = $('#qty option:selected').val();
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "{% url 'cart:add_to_cart' %}",
+            data: {
+                size,
+                qty,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                dataType: "json",
+
+            },
+            beforeSend: function () {
+                document.getElementById('spinner_cart').style.display = 'block'
+                document.getElementById('btn').style.display = 'none'
+            },
+            success: function (res) {
+                $("#modalAddcart .modal-border").html(res.data);
+                $("#modalAddcart").modal('toggle');
+                $('.cart-count-lenght').text(res.totel_count_cart);
+                document.getElementById('spinner_cart').style.display = 'none'
+                document.getElementById('btn').style.display = 'block'
+            },
+            failure: function () {
+            }
+        });
+    });
+
+
+
+
+</script>
+
+{% endblock %}

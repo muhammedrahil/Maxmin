@@ -1,0 +1,28 @@
+
+    <div class="coupon_code bg-light shadow-sm " data-aos="fade-up" data-aos-delay="400">
+        <h3>Cart Totals</h3>
+        <div class="coupon_inner">
+            <div class="cart_subtotal">
+                <h5 class="font-weight-bold">Subtotal (<span class="cart-count-lenght">{{length_product}}</span> items)</h5>
+                <p class="cart_amount">₹ <span class="totel-price">{{totel_price}}</span></p>
+            </div>
+            <div class="cart_subtotal ">
+                <p>Discount</p>
+                <p class="cart_amount text-success font-weight-bold">₹ <span class="totel-savings ">{{savings}}</span></p>
+            </div>
+            <div class="cart_subtotal ">
+                <p>Delivery Charges</p>
+                <p class="cart_amount"><span> ₹00.00</span></p>
+            </div>
+            <hr>
+            <div class="cart_subtotal">
+                <h4 class="font-weight-bold">Total Amount</h4>
+                <p class="cart_amount font-weight-bold">₹ <span class="totel-price">{{totel_price}}</span></p>
+            </div>
+            <h5 class="text-center text-success font-weight-bold ">You will save ₹<span class="totel-savings">{{savings}}</span> on this order</h5>
+            <hr>
+            <div class="checkout_btn ">
+                <a href="{% url 'cart:checkout' %}" class="btn btn-md btn-golden">Proceed to Checkout</a>
+            </div>
+        </div>
+    </div>

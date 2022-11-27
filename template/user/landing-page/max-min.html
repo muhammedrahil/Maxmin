@@ -1,0 +1,118 @@
+{% extends "user/base-layout.html" %}
+{% load static %}
+
+
+{% block static %}
+<style>
+    .checked {
+        color: orange;
+    }
+    .image-box .image-link .product-img{
+        height:50vh ; 
+        max-width:50vh ;
+    }
+    @media only screen and (max-width: 768px) {
+    .product-default-single-item .image-box {
+            height: 20vh;
+            max-width: 30vh;
+        }
+     .image-box .image-link .product-img{
+            height: 20vh;
+            max-width: 30vh;
+        }
+    .product-default-single-item .content .content-left .review-star{
+            font-size: 10px;
+        }
+        .product-default-single-item .content .content-right .price , .text-success {
+            font-size: 10px;
+        }
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<!-- Start Hero Slider Section-->
+<div class="hero-slider-section mt-5 container ">
+    <!-- Slider main container -->
+    <div class="hero-slider-active swiper-container  ">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper ">
+            {% for h in hero_banner_advertisement %}
+            <!-- Start Hero Single Slider Item -->
+            <div class="hero-single-slider-item swiper-slide ">
+                <!-- Hero Slider Image -->
+                <div class="hero-slider-bg">
+                    <img src="{{h.banner.url}}" alt="" class="hero-img">
+                </div>
+            </div> <!-- End Hero Single Slider Item -->
+            <!-- Start Hero Single Slider Item -->
+            {% endfor %}
+        </div>
+        <!-- If we need pagination -->
+        <div class="swiper-pagination active-color-golden"></div>
+        <!-- If we need navigation buttons -->
+        <div class="swiper-button-prev d-none d-lg-block"></div>
+        <div class="swiper-button-next d-none d-lg-block"></div>
+    </div>
+</div>
+<!-- End Hero Slider Section-->
+
+
+
+
+{% include 'user/landing-page/banner-section.html' %}
+
+
+<!-- Start Product Default Slider Section -->
+<div class="product-default-slider-section section-top-gap-100 section-fluid">
+    <!-- Start Section Content Text Area -->
+    <div class="section-title-wrapper" data-aos="fade-up" data-aos-delay="0">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="section-content-gap">
+                        <div class="secton-content">
+                            <h3 class="section-title">THE NEW ARRIVALS</h3>
+                            <p>Preorder now to receive exclusive deals & gifts</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'user/landing-page/section-content.html' %}
+
+</div>
+<!-- End Product Default Slider Section -->
+
+<!-- Start Banner Section -->
+<div class="banner-section section-top-gap-100 mb-5">
+    <div class="container">
+        <div class="row">
+            {% for c in center_advertisement %}
+            <div class="col-lg-6 col-12">
+                <div class="col-xl-10 offset-xl-1">
+                    <!-- Start Banner Single Item -->
+                    <div class="banner-single-item banner-style-3 banner-animation img-responsive" data-aos="fade-up"
+                        data-aos-delay="0">
+                        <div class="image">
+                            <img class="img-fluid" src="{{c.banner.url}}" c alt="">
+                        </div>
+                    </div>
+                    <!-- End Banner Single Item -->
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+<!-- End Banner Section -->
+
+
+
+<!-- End Product Default Slider Section -->
+
+{% endblock %}

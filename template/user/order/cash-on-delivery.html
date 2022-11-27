@@ -1,0 +1,48 @@
+<!-- cash on delivery  -->
+<div class="col-lg-12">
+    <label class="radio mb-1" id="cash_on_delivery_method">
+        <input type="radio" name="cash_on_delivery" class="cash_on_delivery" id="cash_on_delivery_id"
+            value="cash on delivery" onclick="cash_on_delivery()">
+        <span>
+            <div class="col-lg-12" style="width: 42rem;">
+                <p class="font-weight-bold">CASH ON DELIVERY</p>
+            </div>
+        </span>
+    </label>
+    <div id="cash_on_delivery_method_verify" style="display: none;" >
+            <div class="row mt-3" id="error_part">
+                    <p id="error_massage" class=" ml-5 font-weight-bold text-danger"></p>
+                <div class="col-lg-3" onmousedown='return false;' onselectstart='return false;'>
+                    <div class="default-form-box mb-20 ml-3 text-center border ">
+                        <div class="row">
+                            <div class="col-lg-9 col-9" onmousedown='return false;' onselectstart='return false;'>
+                                <input type="text" id="cash_on_delivery_code_genarator_input" name="cash_on_delivery_code_genarator_input" hidden >
+                                <h3 class="font-weight-bold" id="cash_on_delivery_code_genarator" ></h3>
+                            </div>
+                            <div class="col-lg-3 col-3">
+                                <a href="javascript:void(0)">
+                                    <a href="javascript:void(0)" onclick="refresh_cash_on_delivery_code_genarator()"
+                                        class="font-weight-bold text-center mt-2">&#x21bb;</a>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="default-form-box mb-20">
+                        <input type="text" name="try_code" id="try_code" required>
+                    </div>
+                </div>
+                <div class="col-lg-3"> 
+                    <div class="default-form-box mb-20 d-flex">
+                        <input type="submit" class="btn btn-primary text-white" onclick="CONFRIME_ORDER()" value="CONFRIME ORDER">
+                        <input type="submit" class="btn btn-primary text-white ml-2" onclick="cancel_cash_on_delivery_method()" value="CANCEL">
+
+                    </div>
+                </div>
+
+            </div>
+    </div>
+</div>
+
+<!-- end cash on delivery  -->

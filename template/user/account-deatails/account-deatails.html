@@ -1,0 +1,290 @@
+{% extends "user/base-layout.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container" style="height: 70px;"></div>
+<!-- ...:::: Start Account Dashboard Section:::... -->
+<div class="account-dashboard mb-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-3 col-lg-3">
+                <!-- Nav tabs -->
+                <div class="dashboard_tab_button" data-aos="fade-up" data-aos-delay="0">
+                    <ul role="tablist" class="nav flex-column dashboard-list">
+
+                        <li><a href="#profile-Informations" data-bs-toggle="tab"
+                                class="nav-link btn btn-block btn-md btn-black-default-hover active">Profile
+                                Informations</a>
+                        </li>
+                        <li><a href="#address" data-bs-toggle="tab"
+                                class="nav-link btn btn-block btn-md btn-black-default-hover">Addresses</a></li>
+                        <li> <a href="{% url 'payment:order_deatails' %}"
+                                class="nav-link btn btn-block btn-md btn-black-default-hover">Orders</a></li>
+                        <!-- <li><a href="#downloads" data-bs-toggle="tab"
+                                class="nav-link btn btn-block btn-md btn-black-default-hover">Downloads</a></li> -->
+                        <li><a href="{% url 'accounts:logout' %}"
+                                class="nav-link btn btn-block btn-md btn-black-default-hover">logout</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-9 col-lg-9">
+                <!-- Tab panes -->
+                <div class="tab-content dashboard_content" data-aos="fade-up" data-aos-delay="200">
+
+                    {% include 'user/account-deatails/profile-Informations.html' %}
+
+                    {% include 'user/account-deatails/address.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- ...:::: End Account Dashboard Section:::... -->
+{% endblock %}
+{% block script %}
+
+<script>
+    // user_infermations
+    function edit_enable() {
+        var cells = document.getElementsByClassName('disabled');
+        for (var i = 0; i < cells.length; i++) {
+            cells[i].removeAttribute('disabled');
+        }
+        document.getElementById('submit').style.display = 'block'
+        document.getElementById('edit').style.display = 'none'
+        document.getElementById('cancel').style.display = 'block'
+    }
+    function cancel() {
+        var cells = document.getElementsByClassName('disabled');
+        for (var i = 0; i < cells.length; i++) {
+            cells[i].setAttribute('disabled', '')
+        }
+        document.getElementById('submit').style.display = 'none'
+        document.getElementById('edit').style.display = 'block'
+        document.getElementById('cancel').style.display = 'none'
+    }
+
+    $('#user_infermations').on('submit', function (e) {
+        var gender = $(".gender:checked").val();
+        var first_name = $('#first_name').val();
+        var last_name = $('#last_name').val();
+        var user_id = $('#user_id').val();
+        // console.log(gender, first_name, last_name)
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "{% url 'accounts:user_infermations' %}",
+            data: {
+                user_id,
+                gender,
+                first_name,
+                last_name,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                dataType: "json",
+
+            },
+            beforeSend: function () {
+                document.getElementById('spinner').style.display = 'block'
+                document.getElementById('submit').style.display = 'none'
+            },
+            success: function (res) {
+                document.getElementById('spinner').style.display = 'none'
+                document.getElementById('submit').style.display = 'block'
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Your edit has been saved',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            },
+            failure: function () {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'form conatins error',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        });
+    });
+    // end user_infermations
+
+    // email section 
+
+    function edit_email() {
+        var cells = document.getElementsByClassName('disabled_email');
+        for (var i = 0; i < cells.length; i++) {
+            cells[i].removeAttribute('disabled');
+        }
+        document.getElementById('email_submit').style.display = 'block'
+        document.getElementById('edit_email').style.display = 'none'
+        document.getElementById('cancel_email').style.display = 'block'
+    }
+    function cancel_email() {
+        var cells = document.getElementsByClassName('disabled_email');
+        for (var i = 0; i < cells.length; i++) {
+            cells[i].setAttribute('disabled', '')
+        }
+        document.getElementById('email_submit').style.display = 'none'
+        document.getElementById('edit_email').style.display = 'block'
+        document.getElementById('cancel_email').style.display = 'none'
+    }
+
+    // end email section 
+
+    // phone section 
+    function edit_phone() {
+        var cells = document.getElementsByClassName('disabled_phone');
+        for (var i = 0; i < cells.length; i++) {
+            cells[i].removeAttribute('disabled');
+        }
+        document.getElementById('phone_submit').style.display = 'block'
+        document.getElementById('edit_phone').style.display = 'none'
+        document.getElementById('cancel_phone').style.display = 'block'
+    }
+    function cancel_phone() {
+        var cells = document.getElementsByClassName('disabled_phone');
+        for (var i = 0; i < cells.length; i++) {
+            cells[i].setAttribute('disabled', '')
+        }
+        document.getElementById('phone_submit').style.display = 'none'
+        document.getElementById('edit_phone').style.display = 'block'
+        document.getElementById('cancel_phone').style.display = 'none'
+    }
+    // end phone section
+
+    // add address
+
+    function add_new() {
+        document.getElementById('add_new_form').style.display = 'block'
+        document.getElementById('add_new').style.display = 'none'
+    }
+    function cancel_add_new() {
+        document.getElementById('add_new_form').style.display = 'none'
+        document.getElementById('add_new').style.display = 'block'
+    }
+
+    $('#address_form').on('submit', async function (e) {
+        e.preventDefault();
+        let form = document.getElementById('address_form');
+        let formdata = new FormData(form)
+        console.log([...formdata])
+        await axios.post("{% url 'accounts:user_address_deatails' %}", formdata).then((res) => {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your address has been saved',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            window.location.reload()
+
+        });
+    });
+
+    function edit_form(id) {
+        let form = document.getElementById('edit_form-'+id);
+        let formdata = new FormData(form)
+        console.log([...formdata])
+        formdata.append('id',id)
+        axios.post("{% url 'accounts:edit_address' %}", formdata).then((res) => {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Your address has been saved',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                window.location.reload()
+        });
+    }
+    
+
+
+    // delete address 
+
+    function delete_address(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: '{% url "accounts:delete_address" %}',
+                    data: {
+                        'address_id': id,
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        dataType: 'json',
+                    },
+                    success: function (data) {
+                        if (data.data) {
+                            $("#user_address #address-" + id).remove();
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Delete Success fully',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }
+                    },
+                });
+            }
+        })
+    }
+
+    // delete address
+
+
+    // edit address
+
+    // function edit_address(id) {
+    //     document.getElementById('add_new').style.display = 'none'
+    //     document.getElementById('add_new_form-' + id).style.display = 'block'
+    //     document.getElementById('address-' + id).style.display = 'none'
+    // }
+    // function cancel_address(id) {
+    //     document.getElementById('add_new').style.display = 'block'
+    //     document.getElementById('add_new_form-' + id).style.display = 'none'
+    //     document.getElementById('address-' + id).style.display = 'block'
+    // }
+
+
+    function edit_address(id) {
+        var edit_already_address = document.getElementsByClassName('edit_already_address');
+        for (var i = 0; i < edit_already_address.length; i++) {
+            edit_already_address[i].style.display = 'none';
+        }
+        document.getElementById('add_new').style.display = 'none'
+        document.getElementById('add_new_form').style.display = 'none'
+
+        var address = document.getElementsByClassName('list_address');
+        for (var i = 0; i < address.length; i++) {
+            address[i].style.display = 'block';
+        }
+        document.getElementById('address-' + id).style.display = 'none'
+        document.getElementById('edit_already_address-' + id).style.display = 'block'
+
+    }
+    function cancel_address(id) {
+        document.getElementById('add_new').style.display = 'block'
+        document.getElementById('edit_already_address-' + id).style.display = 'none'
+        document.getElementById('address-' + id).style.display = 'block'
+    }
+
+
+ 
+
+
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% for c in color %}
+<tr id="colorTablerow-{{c.pk}}">
+    <td>{{forloop.counter}}</td>
+    <td style="background-color:{{c.color_code}};"></td>
+    <td>{{c.title | title }}</td>
+    <td>{{c.color_code}}</td>
+    <td>
+        <div class="form-check form-switch">
+            <input class="form-check-input ml-1" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+                onclick="color_checkbox({{c.pk}})" {% if c.is_active %} checked {% endif %}>
+        </div>
+    </td>
+    <td>
+        <a class="mr-4 d-inline" href="javascript:void(0)" title="Edit"><i class="fa fa-edit color-muted"
+                data-toggle="modal" data-target="#editcolorModel{{c.pk}}"></i> </a>
+
+        <a href="#" onclick="delete_color({{c.pk}})" class="d-inline " data-toggle="tooltip" data-placement="top"
+            title="Delete"><i class="fa fa-trash color-danger"></i></a>
+    </td>
+</tr>
+{% include 'admin_/categories/color/edit.html' %}
+
+{% endfor %}

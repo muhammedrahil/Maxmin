@@ -1,0 +1,18 @@
+<div class="col-lg-6 col-12">
+  <div class="card-body border-top bg-light mb-2 shadow rounded">
+      <h2 class="font-weight-bold">Product Price Deatails</h2>
+      <h3>Totel Quantity : {{order_instence.totel_quantity}}</h3>
+      <h3>Totel Unit Price : ₹{{order_instence.totel_unit_price}}</h3>
+      <h3>Totel Offer Price : ₹{{order_instence.totel_offer_price}}</h3>
+      <h3>Totel Offer Saving Price : ₹{{order_instence.offer_savings_price}}</h3>
+  </div>
+  {% if order_instence.coupen_active %}
+  <div class="card-body border-top bg-light mb-2 shadow rounded">
+      <h2 class="font-weight-bold">Coupen Price Deatails</h2>
+      <h3>Coupen : {{order_instence.coupon_text}}</h3>
+      <h3>Coupen Price : ₹{{order_instence.coupon_price}}</h3>
+      <h3>Coupen Offer Persentage Off : {{order_instence.coupon.persentage_off}} %off</h3>
+      <h3>Coupen Saving Price : ₹{{order_instence.coupon_savings_price}}</h3>
+  </div>
+  {% endif %}
+</div>

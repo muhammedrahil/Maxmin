@@ -1,0 +1,61 @@
+<div id="brand-list-main-div">
+    {% for b in brand %}
+    <div class="accordion border" id="brand_accordion-{{b.pk}}">
+        <div class="row">
+            <div class="col-lg-1 col-1">{{forloop.counter}}</div>
+            <div class="col-lg-3 col-3">
+                {% if b.brand_images %} 
+                <img src="{{b.brand_images.url}}" alt="" height="30px" width="30px">
+                {% endif %}
+            </div>
+            <div class="col-lg-2 col-2">{{b.title | title}}</div>
+            <div class="col-lg-6 col-6">
+                <div class="row">
+                    <div class="col-lg-8 col-8">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input ml-1" type="checkbox" role="switch"
+                                id="flexSwitchCheckChecked" onclick="brand_is_active({{b.pk}})" {% if b.is_active %}
+                                checked {% endif %}>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-2"><a class="mr-4 d-inline" href="javascript:void(0)" title="Edit"><i
+                                class="fa fa-edit color-muted" data-toggle="modal"
+                                data-target="#editbrand-{{b.pk}}"></i>
+                        </a></div>
+                    <div class="col-lg-2 col-2">
+                        <a href="#" onclick="deletebrand({{b.pk}})" class="d-inline " data-toggle="tooltip"
+                            data-placement="top" title="Delete"><i class="fa fa-trash color-danger"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel" id="brand_panel{{b.pk}}" >
+        {% for v in b.brand_category.all %}
+        <div class="row p-3 border" id="brand_category-{{v.pk}}-{{b.pk}}">
+            <div class="row">
+                <div class="col-lg-1 col-1">{{forloop.counter}}</div>
+                <div class="col-lg-5 col-5">
+                    {{v.category}}
+                </div>
+                <div class="col-lg-6 col-6">
+                    <div class="row">
+                        <div class="col-lg-8 col-8">
+                            <div class="form-check form-switch">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-2"></div>
+                        <div class="col-lg-2 col-2">
+                            <a href="#" onclick="deletebrand_category({{v.pk}},{{b.pk}})" class="d-inline " data-toggle="tooltip"
+                                data-placement="top" title="Delete"><i class="fa fa-trash color-danger"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% include 'admin_/categories/brand/edit.html' %}
+
+    {% endfor %}
+</div>

@@ -1,0 +1,46 @@
+{% load static %}
+
+<!-- Start Banner Section -->
+<div class="banner-section section-top-gap-100 section-fluid">
+    <div class="banner-wrapper">
+        <div class="container-fluid">
+            <div class="row mb-n6">
+                <div class="col-lg-6 col-12 mb-6">
+                    <!-- Start Banner Single Item --> 
+                    <a href="{{main_advertisement.get_absalute_url}}">           
+                        <div class="banner-single-item banner-style-1 banner-animation img-responsive"
+                            data-aos="fade-up" data-aos-delay="0">
+                            <div class="image">
+                                <img src="{{main_advertisement.banner.url}}" alt="">
+                            </div>
+                        </div>   
+                    </a>        
+                    <!-- End Banner Single Item -->
+                </div>
+
+                <div class="col-lg-6 col-12 mb-6">
+                    <div class="row mb-n6">
+                        {% for l in advertisement %}
+                        <!-- Start Banner Single Item -->
+                       
+                            <div class="col-lg-6 col-sm-6 mb-6">
+                                <a href="{{l.get_absalute_url}}">
+                                <div class="banner-single-item  banner-style-2 banner-animation img-responsive"
+                                    data-aos="fade-up" data-aos-delay="0">
+                                    <div class="image">   
+                                        <img src="{{l.banner.url}}" alt="">        
+                                    </div>
+                                </div>
+                            </a> 
+                            </div>
+                       
+                        <!-- End Banner Single Item -->
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- End Banner Section -->

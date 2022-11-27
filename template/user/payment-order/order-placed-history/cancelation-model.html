@@ -1,0 +1,41 @@
+
+<!-- Start Modal Add cart -->
+<div class="modal fade" id="modalAddcart_cancel_single" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col text-right">
+                            <button type="button" class="close modal-close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"> <i class="fa fa-times"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row p-3">
+                        <h3 class="font-weight-bold">Easy Cancelation</h3>
+                        <div class="col-md-12 p-4 border">
+                            <form action="javascript:void(0)" id="cancel_order" method="post">
+                                <input type="hidden" value="{{orderstatus.id}}" id="order_status_single">
+                                <label for="">Reason for Cancelation</label>
+                                <div class="mb-5">
+                                    <select name="" id="reason_select_single">
+                                        {% for c in cancel_reasons %}
+                                        <option value="{{c.id}}">{{c.reasons}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <br>
+                                <div class="mt-4">
+                                    <textarea class="form-control" placeholder="Comment here" id="comments_single"
+                                        style="height: 100px"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary float-right text-white mt-5">Continue</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- End Modal Add cart -->

@@ -1,0 +1,9 @@
+
+        {% for message in messages %}
+        <div class="message ">
+            <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                {{ message | safe }}
+                <a href="#" class="del-msg">&times;</a>
+            </div>
+        </div>
+        {% endfor %}

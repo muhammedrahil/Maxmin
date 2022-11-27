@@ -1,0 +1,41 @@
+
+<div class="modal fade" id="editcolorModel{{c.pk}}" tabindex="-1" role="dialog"
+aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Color</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form action="javascript:void(0)"   onsubmit="edit_color({{c.pk}})">
+                <label for="">Select color</label>
+                <div class="form-group">
+                    <input type="color"  placeholder="Enter Color" onchange="edit_color_select(this.value,{{c.pk}})"  value="{{c.color_code}}" name=""  id="color-code-select-{{c.pk}}"  >
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Enter Color Name" onchange="edit_color_code(this.value,{{c.pk}})" id="color-code-{{c.pk}}" value="{{c.color_code}}"   >
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Enter Color Name" id="color-name-{{c.pk}}"  value="{{c.title}}" >
+                </div>
+
+                <div class="form-group">
+                    <textarea class="form-control" id="color-description-{{c.pk}}" rows="3" required  name="description"
+                        placeholder="Enter description">{{c.discription}}</textarea>
+                </div>
+                <div class="float-right">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"> Save </button>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
+</div>
+</div>

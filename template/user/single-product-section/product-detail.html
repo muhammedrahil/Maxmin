@@ -1,0 +1,257 @@
+<!-- Start Product Details Section -->
+<div class="product-details-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-5 col-lg-6">
+                <div class="product-details-gallery-area product-details-gallery-area-vartical product-details-gallery-area-vartical-left"
+                    data-aos="fade-up" data-aos-delay="0">
+                    <!-- Start Large Image -->
+                    <div class="product-large-image product-large-image-vartical swiper-container ml-5">
+                        <div class="swiper-wrapper">
+
+                            <div class="product-image-large-image swiper-slide zoom-image-hover img-responsive">
+                                <img src="{{product.images.url}}" alt="">
+                            </div>
+                            <div class="product-image-large-image swiper-slide zoom-image-hover img-responsive">
+                                <img src="{{product.images2.url}}" alt="">
+                            </div>
+                            {% if product.images3 %}
+                            <div class="product-image-thumb-single swiper-slide zoom-image-hover img-responsive">
+                                <img class="img-fluid" src="{{product.images3.url}}" alt="">
+                            </div>
+                            {% endif %}
+                            {% if product.images4 %}
+                            <div class="product-image-thumb-single swiper-slide zoom-image-hover img-responsive">
+                                <img class="img-fluid" src="{{product.images4.url}}" alt="">
+                            </div>
+                            {% endif %}
+                            {% if product.images5 %}
+                            <div class="product-image-thumb-single swiper-slide zoom-image-hover img-responsive">
+                                <img class="img-fluid" src="{{product.images5.url}}" alt="">
+                            </div>
+                            {% endif %}
+                            {% if product.images6 %}
+                            <div class="product-image-thumb-single swiper-slide zoom-image-hover img-responsive">
+                                <img class="img-fluid" src="{{product.images6.url}}" alt="">
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- End Large Image -->
+                    <!-- Start Thumbnail Image -->
+                    <div class="product-image-thumb product-image-thumb-vartical swiper-container pos-relative">
+                        <div class="swiper-wrapper">
+
+                            <div class="product-image-thumb-single swiper-slide">
+                                <img class="img-fluid" src="{{product.images.url}}" alt="">
+                            </div>
+                            <div class="product-image-thumb-single swiper-slide">
+                                <img class="img-fluid" src="{{product.images2.url}}" alt="">
+                            </div>
+                            
+                            {% if product.images3 %}
+                            <div class="product-image-thumb-single swiper-slide">
+                                <img class="img-fluid" src="{{product.images3.url}}" alt="">
+                            </div>
+                            {% endif %}
+                            {% if product.images4 %}
+                            <div class="product-image-thumb-single swiper-slide">
+                                <img class="img-fluid" src="{{product.images4.url}}" alt="">
+                            </div>
+                            {% endif %}
+                            {% if product.images5 %}
+                            <div class="product-image-thumb-single swiper-slide">
+                                <img class="img-fluid" src="{{product.images5.url}}" alt="">
+                            </div>
+                            {% endif %}
+                            {% if product.images6 %}
+                            <div class="product-image-thumb-single swiper-slide">
+                                <img class="img-fluid" src="{{product.images6.url}}" alt="">
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- End Thumbnail Image -->
+                </div>
+            </div>
+
+            <div class="col-xl-7 col-lg-6 col-12">
+                <div class="product-details-content-area product-details--golden" data-aos="fade-up"
+                    data-aos-delay="200">
+                    <!-- Start  Product Details Text Area-->
+                    <div class="product-details-text">
+                        <h4 class="title">{{product.product.product_name}}</h4>
+                        <div class="d-flex align-items-center">
+                            <ul class="review-star">
+                                {% if product.rating == 0 %}
+                                <span class="fa fa-star "></span>
+                                <span class="fa fa-star "></span>
+                                <span class="fa fa-star "></span>
+                                <span class="fa fa-star "></span>
+                                <span class="fa fa-star "></span>
+
+                                {% endif %}
+                                {% if product.rating == 1 %}
+                                <span class="fa fa-star checked"></span>
+                                 <span class="fa fa-star "></span>
+                                <span class="fa fa-star "></span>
+                                <span class="fa fa-star "></span>
+                                <span class="fa fa-star "></span>
+
+                                {% endif %}
+                                {% if product.rating == 2 %}
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star "></span>
+                                <span class="fa fa-star "></span>
+                                <span class="fa fa-star "></span>
+
+                                {% endif %}
+                                {% if product.rating == 3 %}
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star "></span>
+                                <span class="fa fa-star "></span>
+
+                                {% endif %}
+                                {% if product.rating == 4 %}
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star "></span>
+
+                                {% endif %}
+                                {% if product.rating == 5 %}
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                {% endif %}
+                            </ul>
+                            <a href="#" class="customer-review ml-2">(customer review)</a>
+                        </div>
+                        <div class="price"><del class="text-secondary">₹{{product.product.unit_price}}</del>
+                            ₹{{product.offerprice}}</div>
+                        <p style="color: {{product.product_color.color_code}};">{{product.product_color.title}}</p>
+                        {% if product.product.main_category == '1' %}
+                        <h5>Men's {{product.product.category.category}}</h5>
+
+                        {% elif product.product.main_category == '2' %}
+                        <h5>Women's {{product.product.category.category}}</h5>
+
+                        {% else %}
+                        <h5>Kid's {{product.product.category.category}}</h5>
+                        {% endif %}
+
+
+                    </div>
+                    <!-- End  Product Details Text Area-->
+                    <!-- Start Product Variable Area -->
+                    <div class="product-details-variable">
+                        <h4 class="title">Available Options</h4>
+
+
+                        <!-- related images  -->
+                        <div class="row">
+                            <div class="d-flex ">
+                                <div class="card m-1 img-responsive border border-dark" style="width: 6rem;  ">
+                                    <a href="javascript:void(0)"><img src="{{product.images.url}}" alt=""
+                                            class="card-img-top"></a>
+                                </div>
+                                {% for i in related %}
+                                <div class="card m-1 img-responsive" style="width: 6rem;">
+                                    <a href="{{i.get_absolute_url}}"><img src="{{i.images.url}}" alt=""
+                                            class="card-img-top"></a>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <!-- related images  -->
+
+
+                        <form action="" id="add_to_cart" method="post">
+                            {% csrf_token %}
+                            <div class="mb-2 mt-2">
+                                <h4 class="title">Available Size</h4>
+                                <div class="">
+                                    <p>Please select your Size</p>
+                                    {% for q in product_qwantity %}
+                                    <label class="radio mb-1">
+                                        <input type="radio" name="size" class="size" value="{{q.id}}"
+                                            onclick="sizeqty({{q.id}})" required>
+                                        <span>{{q.product_size}}</span>
+                                    </label>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <!-- Product Variable Single Item -->
+                            <div class="d-flex align-items-center ">
+                                <div class="variable-single-item " id="qty_div">
+                                    <span>Quantity</span>
+                                    <div class="product-variable-quantity">
+                                        <select name="qty" id="qty" class="qty" disabled>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="product-add-to-cart-btn mt-5">
+                                    <button class="btn btn-md btn-black-default-hover mb-4 col-lg-12 col-md-12 "
+                                        id="btn" style="height: 48px;" type="submit"> + Add to Beg
+
+                                        <div class="spinner-border" role="status" id="spinner_cart"
+                                            style="display: none;">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </button>
+
+                                </div>
+                            </div>
+                        </form>
+                        <!-- Start  Product Details Meta Area-->
+                        <!-- <div class="product-details-meta mb-20">
+                            <a href="wishlist.html" class="icon-space-right"><i class="icon-heart"></i>Add to
+                                wishlist</a>
+                            <a href="compare.html" class="icon-space-right"><i class="icon-refresh"></i>Compare</a>
+                        </div> -->
+                        <!-- End  Product Details Meta Area-->
+                    </div>
+                    <!-- End Product Variable Area -->
+
+
+                    <!-- Start  Product Details Catagories Area-->
+                    <!-- <div class="product-details-catagory mb-2">
+                        <span class="title">CATEGORIES:</span>
+                        <ul>
+                            <li><a href="#">BAR STOOL</a></li>
+                            <li><a href="#">KITCHEN UTENSILS</a></li>
+                            <li><a href="#">TENNIS</a></li>
+                        </ul>
+                    </div> -->
+                    <!-- End  Product Details Catagories Area-->
+
+
+                    <!-- Start  Product Details Social Area-->
+                    <!-- <div class="product-details-social">
+                        <span class="title">SHARE THIS PRODUCT:</span>
+                        <ul>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        </ul>
+                    </div> -->
+                    <!-- End  Product Details Social Area-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Product Details Section -->

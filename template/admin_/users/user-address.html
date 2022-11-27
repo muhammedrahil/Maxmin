@@ -1,0 +1,36 @@
+{% extends "admin_/base.html" %}
+{% load static %}
+
+{% block static %}
+<link rel="stylesheet" type="text/css" href="{% static 'adm/assets/vendor/datatables/css/dataTables.bootstrap4.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'adm/assets/vendor/datatables/css/buttons.bootstrap4.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'adma/assets/vendor/datatables/css/select.bootstrap4.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'adm/assets/vendor/datatables/css/fixedHeader.bootstrap4.css' %}">
+{% endblock %}
+{% block pagetitle %} {{user.fullname}} All Address  {% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-5">
+    {% for i in address %}
+    <div class="card-body border-top bg-light mb-2 shadow rounded ">
+      <h3 class="font-weight-bold"> {{forloop.counter}} - {{i.name}}</h3>
+      <p>{{i.address}} {{i.locality}}
+        {{i.city_district_town}} {{i.landmark}}
+        {{i.state}}
+        <br> - {{i.pincode}}, {{i.state}}
+      </p>
+      <h4 class="font-weight-bold">Phone number : +91 {{i.phone_no}} </h4>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+
+<script>
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends "user/base-layout.html" %}
+
+
+
+{% block content %}
+
+
+<div class="customer-login mb-5 mt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-3"></div>
+      <div class="col-lg-6 col-md-6">
+        <div class="account_form border" data-aos="fade-up" data-aos-delay="0">
+          <form action="" method="POST">
+            {% csrf_token %}
+
+            {% include 'user/accounts/massage.html' %}
+
+            <div class="row">
+            <div class="col-lg-6">
+              <div class="default-form-box">
+                <label>First Name</label>
+                {{form.first_name}}
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="default-form-box">
+                <label>Last Name</label>
+                {{form.last_name}}
+              </div>
+            </div>
+          </div>
+
+            <div class="default-form-box">
+              <label>Email</label>
+              {{form.email}}
+            </div>
+            <div class="default-form-box">
+              <label>Phone Number</label>
+              {{form.phone_no}}
+            </div>
+
+            {% include 'user/accounts/password-valid.html' %}
+
+            <p>{{form.non_field_errors}}</p>
+            <div class="default-form-box">
+              <label>Passwords </label>
+              {{form.password}}
+            </div>
+            <div class="default-form-box">
+              <label>Confrim Passwords </label>
+              {{form.confrim_password}}
+            </div>
+
+            <div class="row">
+           
+              <div class="default-form-box">
+                <label>Select Verifications options</label>
+              </div>
+              <div class="col-lg-1">
+                  <input  type="radio" name="option" value="email" required>
+              </div>
+              <div class="col-lg-5">
+                <label>Email verification</label>
+              </div>
+              <div class="col-lg-1">
+                <input  type="radio" name="option" value="phone" required>
+            </div>
+            <div class="col-lg-5">
+              <label>Phone number OTP</label>
+            </div>
+            </div>
+
+
+            <div class="login_submit mt-5">
+              <div class="mb-5">
+                <label class="checkbox-default mb-5" for="offer">
+                  <input type="checkbox" id="offer">
+                  <span>Remember me</span>
+                </label>
+              </div>
+            </div>
+            <button class="btn btn-md btn-black-default-hover mb-4 col-lg-12 col-md-12" type="submit">Join Us</button>
+            <label for="">Already a Member? </label> <a href="{% url 'accounts:login' %}"><u>Sign In.</u> </a>
+          </form>
+
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3"></div>
+
+      <!--login area start-->
+    </div>
+  </div>
+</div> <!-- ...:::: End Customer Login Section :::... -->
+{% endblock %}
+
+{% block script %}
+
+
+
+{% endblock %}

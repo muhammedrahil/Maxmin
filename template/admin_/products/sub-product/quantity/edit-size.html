@@ -1,0 +1,36 @@
+<div class="modal fade" id="add-sub-size-quantity-{{q.pk}}" tabindex="-1" role="dialog" aria-labelledby="addModal"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="add-sub-size-quantity">Add Size & Qaunity</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="javascript:void(0)" id="edit-sub-product-size-{{q.pk}}" onsubmit="editQuantity({{q.pk}})">
+          {% csrf_token %}
+          <div class="form-group">
+            <select name="id_sub_size" id="id-sub-size" class="form-control">
+              <option value="" disabled selected hidden>Select Size</option>
+              {% for i in size %}
+              <option value="{{i.pk}}" {% if q.product_size.pk == i.pk %} selected {% endif %}>{{i.Size}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="number" class="form-control" id="add-sub-stock" value="{{q.stock}}" name="add_sub_qauntity"
+              placeholder="Enter Totel Qaunity" required>
+          </div>
+          <div class="float-right">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" onclick="" class="btn btn-primary">save</button>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>

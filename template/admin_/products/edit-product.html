@@ -1,0 +1,96 @@
+
+
+<div class="modal fade"  id="edit_product{{i.pk}}" tabindex="-1" role="dialog"
+aria-labelledby="addModal" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="addModal-size"><span class="font-weight-bold">Edit</span>  {{i.product_name}} </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form action="javascript:void(0)" enctype="multipart/form-data" id="add_product_basics-{{i.pk}}" onsubmit="edit_product({{i.pk}})">
+                <div class="form-group">
+                    <label for="inputEmail">Product Name</label>
+                    <input id="" type="text" name="product_name"  required=""
+                        value="{{i.product_name}}"  class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPassword">Unit Price</label>
+                    <input id="inputPassword" type="number" value="{{i.unit_price}}" name="unit_price" required=""
+                        class="form-control">
+                </div>
+                <label for="" class="font-weight-bold text-dark">Select Gender category</label>
+                <div class="form-group">
+                    {% for c in gender %}
+                    <label for="" class="m-2">{{c.gender | title}}</label>
+                    <input type="checkbox" placeholder=" gender"
+                    {% for g in i.main_category.all %}
+                    {% if g.pk == c.pk %}
+                    checked
+                    {% endif %}
+                    {% endfor %}
+                    id="{{c.pk}}" value="{{c.pk}}"
+                        name="gender_category" class="brand_category" data-filter="brandcategory">
+                    {% endfor %}
+                </div>
+
+                <div class="form-group">
+                    <label for="input-select">Select Category</label>
+                    <select class="form-control" id="" name="product_caregory">
+                        {% for k,v in category.items %}
+                        <optgroup label="{{k.category}}">
+                            {% for s in v %}
+                            <option value="{{s.pk}}"
+                            {% if i.category.pk == s.pk %}
+                            selected
+                            {% endif %}
+                            >{{s.category}}</option>
+                            {% endfor %}
+                        </optgroup>    
+                        {% endfor %}
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+                    <label for="input-select">Select Brand</label>
+                    <select class="form-control" id="" name="product_brand">
+                        {% for b in brand %}
+                        <option value="{{b.pk}}"
+                        {% if i.product_brand.pk == b.pk %}
+                        selected
+                        {% endif %}
+                        >{{b.title}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" id="add-product-description" rows="3" name="description" name=""
+                        placeholder="Enter description">{{i.description}}</textarea>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 pb-2 pb-sm-4 pb-lg-0 pr-0">
+                        <label class="be-checkbox custom-control custom-checkbox">
+                           
+                        </label>
+                    </div>
+                    <div class="col-sm-6 pl-0">
+                        <p class="text-right">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-space btn-primary">Submit</button>
+                        </p>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
+</div>
+</div>
+

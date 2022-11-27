@@ -1,0 +1,29 @@
+<div class="col-lg-6 col-12">
+  <div class="card-body border-top bg-light mb-2 shadow rounded">
+      {% for i in order_instence.products.all %}
+      <div class="row">
+          <div class="col-lg-4 col-4">
+              <div class="card m-1 img-responsive border border-dark" style="width: 6rem;  ">
+                  <a href="javascript:void(0)"><img src="{{i.product.images2.url}}" alt=""
+                          class="card-img-top"></a>
+              </div>
+          </div>
+          <div class="col-lg-8 col-8">
+              <p class="font-weight-bold">{{i.product.product.product_name}}</p>
+              <div class="d-flex">
+                  <p>Size: <span
+                          style="text-transform:uppercase;">{{i.product_quantity.product_size}}</span>
+                  </p>
+                  <p class="ml-2">Quantity: {{i.product_qty}}</p>
+              </div>
+              <div class="d-flex">
+                  <p><del>₹{{i.totel_unit_price}}</del></p>
+                  <p class="font-weight-bold ml-2 ">₹{{i.totel_qty_price}}</p>
+                  <p class="text-success ml-2 font-weight-bold">{{i.product.offer_persentage}}% off</p>
+              </div>
+          </div>
+      </div>
+      <hr>
+      {% endfor %}
+  </div>
+</div>

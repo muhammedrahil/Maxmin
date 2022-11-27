@@ -1,0 +1,42 @@
+<div class="modal fade" {% block model_id %} id="addModal" {% endblock model_id %} tabindex="-1" role="dialog"
+    aria-labelledby="addModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModal">{% block title %} Add Category {% endblock title %}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="javascript:void(0)" onsubmit="add_category()" >
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <select name="" id="add-category" class="form-control"> 
+                            <option value="">Parent Category</option> 
+                            {% for i in category %}
+                            <option value="{{i.pk}}">{{i.category}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="add-category-text" name=""
+                            placeholder="Enter Category" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" id="add-category-description" rows="3" required
+                            name="description"
+                            placeholder="Enter description"></textarea>
+                    </div>
+                    <div class="float-right">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" onclick="" class="btn btn-primary" >save</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,93 @@
+<div class="tab-pane fade show active" id="profile-Informations">
+    <h3 class="font-weight-bold">Profile Informations </h3>
+    <div class="login">
+        <div class="login_form_container">
+            <div class="account_login_form">
+
+                <div class="border p-3">
+                    <form action="#" id="user_infermations">
+                       
+                        <p id="edit"><a href="javascript:void(0)" onclick="edit_enable()"
+                                class="font-weight-bold">Edit</a></p>
+                        <p id="cancel" style="display: none;"><a href="javascript:void(0)" onclick="cancel()"
+                                class="font-weight-bold">cancel</a></p>
+
+                        <div class="input-radio default-form-box mb-20">
+                            <label>Gender</label>
+                            <span class="custom-radio"><input type="radio" value="male"
+                                 {% if user_infermations.gender == "male" %} checked {% endif %}
+                                  class="disabled gender" disabled name="id_gender">Male</span>
+                                  
+                            <span class="custom-radio"><input type="radio" value="female"
+                                 {% if user_infermations.gender == "female" %} checked {% endif %} 
+                                 class="disabled gender" disabled name="id_gender"> Female</span>
+                        </div> <br>
+                        <div class="default-form-box mb-20">
+                            <label>First Name</label>
+                            <input type="text" name="first-name" id="first_name"
+                                value="{{user_infermations.first_name}}" class="disabled" disabled>
+                        </div>
+                        <div class="default-form-box mb-20">
+                            <label>Last Name</label>
+                            <input type="text" name="last-name" id="last_name" value="{{user_infermations.last_name}}"
+                                class="disabled" disabled>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary text-white " id="submit"
+                            style="display: none;">
+                             Save
+                            <div class="spinner-border" role="status" id="spinner" style="display: none;">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </button>
+
+                    </form>
+                </div>
+
+
+                
+                <div class="border p-3 mt-3"  >
+                    <form action="">
+                    <p id="edit_email"><a href="javascript:void(0)" onclick="edit_email()"
+                            class="font-weight-bold">Edit</a></p>
+                    <p id="cancel_email" style="display: none;"><a href="javascript:void(0)"  onclick="cancel_email()"
+                            class="font-weight-bold">cancel</a></p>
+                        <div class="default-form-box mb-20">
+                            <label>Email</label>
+                            <input type="text" name="email-name" value="{{user_infermations.email}}" class="disabled_email"  disabled>
+                        </div>
+                        <button type="submit" class="btn btn-primary text-white " id="email_submit" style="display: none;">Save
+                        <div class="spinner-border" role="status" id="spinner_email" style="display: none;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </button>
+                    </form>
+                </div>
+
+
+                <div class="border p-3 mt-3"  >
+                    <form action="">
+                    <p id="edit_phone"><a href="javascript:void(0)" onclick="edit_phone()"
+                            class="font-weight-bold">Edit</a></p>
+                    <p id="cancel_phone" style="display: none;"><a href="javascript:void(0)" onclick="cancel_phone()"
+                            class="font-weight-bold">cancel</a></p>
+                        <div class="default-form-box mb-20">
+                            <label>Phone Number</label>
+                            <input type="text" name="user-password" value="{{user_infermations.phone_no}}" class="disabled_phone" disabled>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary text-white " id="phone_submit" style="display: none;">Save
+                        <div class="spinner-border" role="status" id="spinner_phone" style="display: none;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </button>
+
+                    </form>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>

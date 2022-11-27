@@ -1,0 +1,137 @@
+{% extends "admin_/base.html" %}
+{% load static %}
+
+{% block pagetitle %} {{sub_product.product.product_name}} {% endblock %}
+
+{% block navigate %}
+<li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+<li class="breadcrumb-item"><a href="#" class="breadcrumb-link">product</a></li>
+<li class="breadcrumb-item"><a href="#" class="breadcrumb-link">{{product.product_name}}</a></li>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-5">
+
+        <div class="card-body border-top bg-light mb-2 shadow rounded d-flex text-center">
+            <h3 class="ml-5 "><span class="font-weight-bold">SKU :</span> {{sub_product.sku}}</h3>
+            <h3 class="ml-5 "><span class="font-weight-bold">OFFER PRICE :</span> ₹ {{sub_product.offerprice}}</h3>
+            <h3 class="ml-5 "><span class="font-weight-bold">TOTEL STOCK :</span>
+                {{sub_product.sub_product_totel_stoke}}</h3>
+        </div>
+        <div class="card-body border-top bg-light mb-2 shadow rounded ">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-sub-size-quantity">ADD
+                NEW</button>
+        </div>
+        {% include 'admin_/products/sub-product/quantity/add-size.html' %}
+
+
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="row mt-2">
+                    {% for q in size_qauntity %}
+                    <div class="col-lg-4">
+                        <div class="card" style="width: 17rem;">
+                            <div class="card-body">
+                                <h5 class="card-title"><span class="font-weight-bold h1 text-dark">Size :
+                                        {{q.product_size}}</span>&nbsp;&nbsp;&nbsp;({{q.product_size.discription}})</h5>
+                                <p class="card-text h4">Qaunity : {{q.quantity}}</p>
+                                <div>
+                                    <a href="javascript:void(0)" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#add-sub-size-quantity-{{q.pk}}">Edit</a>
+                                    <a href="#" class="btn btn-danger" onclick="delete_qty({{q.pk}})">Delete</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% include 'admin_/products/sub-product/quantity/edit-size.html' %}
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+{% block script %}
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    const form = document.getElementById('add-sub-product-size')
+    $('#add-sub-product-size').on('submit', async (e) => {
+        e.preventDefault()
+        let formdata = new FormData(form)
+        formdata.append('subproduct_id', '{{sub_product.pk}}')
+        await axios.post('{% url "product:add_size_quantity" %}', formdata).then((res) => {
+            if (res.data.data) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'add Success fully',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            }
+            window.location.reload()
+        })
+
+    })
+
+
+    function editQuantity(pk) {
+        const editform = document.getElementById('edit-sub-product-size-'+pk)
+        let formdata = new FormData(editform)
+        formdata.append('pk', pk)
+        axios.post('{% url "product:edit_size_quantity" %}', formdata).then((res) => {
+            if (res.data.data) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'edit Success fully',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            }
+            window.location.reload()
+        })
+    }
+
+
+    function delete_qty(pk) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let data = new FormData();
+                data.append("csrfmiddlewaretoken", '{{csrf_token}}')
+                data.append("pk", pk)
+                axios.post('{% url "product:delete_size_qty" %}', data).then((res) => {
+                    if (res.data.data) {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Delete Success fully',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    }
+                    window.location.reload()
+                })
+            }
+        })
+    }
+</script>
+
+{% endblock %}

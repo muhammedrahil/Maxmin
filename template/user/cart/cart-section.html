@@ -1,0 +1,153 @@
+{% extends "user/base-layout.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container" style="height: 70px;"></div>
+
+
+<!-- ...:::: Start Cart Section:::... -->
+<div class="cart-section">
+    <!-- Start Cart Table -->
+    <div class="cart-table-wrapper" data-aos="fade-up" data-aos-delay="0">
+        <div class="container mb-5">
+            <div class="row">
+                {% if status == True %}
+                <div class="col-12 col-lg-7">
+                    <div class=" p-2 border mt-5 bg-light  shadow-sm " id="section" style="margin-top: 40px;">
+                        <div class="" id="filter">
+                            <div id="cartTable ">
+                                {% include 'user/cart/cart-table.html' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-12 " style="margin-bottom: 40px;">
+                    {% include 'user/cart/cart-totel.html' %}
+                </div>
+                {% else %}
+                <!-- ...::::Start About Us Center Section:::... -->
+                <div class="empty-cart-section section-fluid mb-4">
+                    <div class="emptycart-wrapper">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3">
+                                    <div class="emptycart-content text-center">
+                                        <div class="image">
+                                            <img class="img-fluid"
+                                                src="{% static 'user/images/emprt-cart/empty-cart.png'%}" alt="">
+                                        </div>
+                                        <h4 class="title">Your Cart is Empty</h4>
+                                        <h6 class="sub-title">Sorry Mate... No item Found inside your cart!</h6>
+                                        <a href="{% url 'landing:landing_page'%}" class="btn btn-lg btn-golden">Continue
+                                            Shopping</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- ...::::End  About Us Center Section:::... -->
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div> <!-- End Cart Table -->
+<!-- End Coupon Start -->
+</div> <!-- ...:::: End Cart Section:::... -->
+{% endblock %}
+
+{% block script %}
+
+<script>
+
+
+
+
+    function quatity(key) {
+        var qty = $('#cart-' + key + ' #qty option:selected').val();
+        var size = $('#cart-' + key + ' #size option:selected').val();
+        $.ajax({
+            type: "POST",
+            url: "{% url 'cart:price_change' %}",
+            data: {
+                qty,
+                key,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                dataType: "json",
+            },
+            success: function (res) {
+                $("#sub_totel_price-" + key).text(res.data);
+                $('.cart-count-lenght').text(res.totel_count_cart);
+                $('.totel-price').text(res.totel_price);
+                $('.totel-savings').text(res.savings);
+                // $("#cartTable #cart-" + key +'#sub_totel_price').text(res.data);
+                // $('#sub_totel_price').text(res.data);
+                // $("#qty_div").html(res.template);
+                console.log('success')
+            },
+            failure: function () {
+            }
+        });
+    }
+
+
+    function size_select(id) {
+        var size = $('#cart-' + id + ' #size option:selected').val();
+        console.log(size)
+        console.log(id)
+        $.ajax({
+            type: "POST",
+            url: "{% url 'cart:size_change' %}",
+            data: {
+                id,
+                size,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                dataType: "json",
+            },
+            success: function (res) {
+                // $('#ta').text(res.data);
+                $("#qty_div-" + id).html(res.data);
+                console.log('success')
+            },
+            failure: function () {
+            }
+        });
+    }
+
+    function delete_cart_items(cart_id) {
+        $.ajax({
+            type: "POST",
+            url: "{% url 'cart:deleted_cart_items' %}",
+            data: {
+                cart_id,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                dataType: "json",
+            },
+            success: function (res) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Delete Success fully',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                $(" #cart-" + cart_id).remove();
+                $('.cart-count-lenght').text(res.length_product);
+                $('.totel-price').text(res.totel_price);
+                $('.totel-savings').text(res.savings);
+                window.location.reload()
+            },
+            failure: function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Sorry ... Delete Not Success fully,something error',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        });
+    }
+
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,274 @@
+{% extends "admin_/base.html" %}
+{% load static %}
+
+{% block dashboard %}active {% endblock %}
+{% block pagetitle %} Dashboard {% endblock %}
+
+{% block navigate %}
+<li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+{% endblock %}
+
+{% block content %}
+<div class="ecommerce-widget">
+    <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="card border-3 border-top border-top-primary">
+                <div class="card-body">
+                    <h5 class="text-muted">Total Revenue</h5>
+                    <div class="metric-value d-inline-block">
+                        {% if revenue.payment_price__sum == none %}
+                        <h1 class="mb-1">₹0</h1>
+                        {% else %}
+                        <h1 class="mb-1">₹{{revenue.payment_price__sum |floatformat:"2" }}</h1>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- <div id="sparkline-revenue"></div> -->
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="card border-3 border-top border-top-primary">
+                <div class="card-body">
+                    <h5 class="text-muted">Totel Users</h5>
+                    <div class="metric-value d-inline-block">
+                        <h1 class="mb-1">{{user_count}}</h1>
+                    </div>
+                </div>
+                <!-- <div id="sparkline-revenue2"></div> -->
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="card border-3 border-top border-top-primary">
+                <div class="card-body">
+                    <h5 class="text-muted">Totel Orders</h5>
+                    <div class="metric-value d-inline-block">
+                        <h1 class="mb-1">{{totel_order}}</h1>
+                    </div>
+                    <!-- <div class="metric-label d-inline-block float-right text-primary font-weight-bold">
+                        <span>N/A</span>
+                    </div> -->
+                </div>
+                <!-- <div id="sparkline-revenue3"></div> -->
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="card border-3 border-top border-top-primary">
+                <div class="card-body">
+                    <h5 class="text-muted">Totel Products</h5>
+                    <div class="metric-value d-inline-block">
+                        <h1 class="mb-1">{{product_count}}</h1>
+                    </div>
+                    <!-- <div class="metric-label d-inline-block float-right text-secondary font-weight-bold">
+                        <span>-2.00%</span>
+                    </div> -->
+                </div>
+                <!-- <div id="sparkline-revenue4"></div> -->
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <!-- ============================================================== -->
+        <!-- sales  -->
+        <!-- ============================================================== -->
+        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+            <div class="card border-3 border-top border-top-primary">
+                <div class="card-body">
+                    <h5 class="text-muted">Totel Sales</h5>
+                    <div class="metric-value d-inline-block">
+                        <h1 class="mb-1">{{totel_sales}}</h1>
+                    </div>
+                    <!-- <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                        <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i
+                                class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">5.86%</span>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end sales  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- new customer  -->
+        <!-- ============================================================== -->
+        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+            <div class="card border-3 border-top border-top-primary">
+                <div class="card-body">
+                    <h5 class="text-muted">Totel Category</h5>
+                    <div class="metric-value d-inline-block">
+                        <h1 class="mb-1">{{category_count}}</h1>
+                    </div>
+                    <!-- <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                        <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i
+                                class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">10%</span>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- end new customer  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- visitor  -->
+        <!-- ============================================================== -->
+        <!-- <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+            <div class="card border-3 border-top border-top-primary">
+                <div class="card-body">
+                    <h5 class="text-muted">Visitor</h5>
+                    <div class="metric-value d-inline-block">
+                        <h1 class="mb-1">13000</h1>
+                    </div>
+                    <div class="metric-label d-inline-block float-right text-success font-weight-bold">
+                        <span class="icon-circle-small icon-box-xs text-success bg-success-light"><i
+                                class="fa fa-fw fa-arrow-up"></i></span><span class="ml-1">5%</span>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- ============================================================== -->
+        <!-- end visitor  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- total orders  -->
+        <!-- ============================================================== -->
+        <!-- <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+            <div class="card border-3 border-top border-top-primary">
+                <div class="card-body">
+                    <h5 class="text-muted">Total Orders</h5>
+                    <div class="metric-value d-inline-block">
+                        <h1 class="mb-1">1340</h1>
+                    </div>
+                    <div class="metric-label d-inline-block float-right text-danger font-weight-bold">
+                        <span class="icon-circle-small icon-box-xs text-danger bg-danger-light bg-danger-light "><i
+                                class="fa fa-fw fa-arrow-down"></i></span><span class="ml-1">4%</span>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- ============================================================== -->
+        <!-- end total orders  -->
+        <!-- ============================================================== -->
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <h5 class="card-header"> Product Category </h5>
+                <div class="card-body">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <h5 class="card-header"> Category Revenue</h5>
+                <div class="card-body">
+                    <canvas id="paymentmyChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card">
+                <h5 class="card-header"> Total Revenue</h5>
+                <div class="card-body">
+                    <canvas id="myCharts"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="text/javascript">
+    const data = {
+        labels: {{ category_name | safe}},
+    datasets: [{
+        label: 'My First Dataset',
+        data: {{ category_counts }},
+        backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)'
+    ],
+        hoverOffset: 4
+        }]
+    };
+
+    const config = {
+        type: 'doughnut',
+        data: data,
+    };
+    const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+    );
+</script>
+
+<script type="text/javascript">
+    const paymentdata = {
+        labels: {{ payment_category_name | safe}},
+    datasets: [{
+        label: 'My First Dataset',
+        data: {{ payment_category_amount | safe}},
+        backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)'
+    ],
+        hoverOffset: 4
+        }]
+    };
+
+    const paymentconfig = {
+        type: 'doughnut',
+        data: paymentdata,
+    };
+    const paymentmyChart = new Chart(
+        document.getElementById('paymentmyChart'),
+        paymentconfig
+    );
+</script>
+
+<script>
+    const datas = {
+        labels: {{ month_payment_month | safe}},
+    datasets: [{
+        label: 'My First dataset',
+        data: {{ month_payment_amount }},
+        backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(255, 159, 64)',
+        'rgb(255, 205, 86)',
+        'rgb(75, 192, 192)',
+        'rgb(54, 162, 235)',
+        'rgb(153, 102, 255)',
+        'rgb(201, 203, 207)',
+        'rgb(122, 250, 0)',
+        'rgb(253, 24, 0)',
+        'rgb(253, 24, 253)',
+        'rgb(8, 24, 253)',
+        'rgb(151, 82, 145)'
+    ],
+    }]
+  };
+
+    const configs = {
+        type: 'bar',
+        data: datas,
+        options: {}
+    };
+
+    const myCharts = new Chart(
+        document.getElementById('myCharts'),
+        configs
+    );
+</script>
+
+{% endblock %}

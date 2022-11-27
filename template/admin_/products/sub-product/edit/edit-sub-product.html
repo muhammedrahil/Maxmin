@@ -1,0 +1,33 @@
+<div>
+  <div class="tab-regular">
+      <ul class="nav nav-tabs nav-fill" id="myTab7" role="tablist">
+          <li class="nav-item">
+              <a class="nav-link active" id="home-tab-justify" data-toggle="tab" href="#home-justify-{{sub_prod.pk}}" role="tab"
+                  aria-controls="home" aria-selected="true">Edit
+                  Product</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" id="profile-tab-justify" data-toggle="tab" href="#profile-Images-{{sub_prod.pk}}" role="tab"
+                  aria-controls="profile" aria-selected="false">Images</a>
+          </li>
+      </ul>
+      <form action="{% url 'product:edit_sub_product_form' sub_prod.pk  %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="tab-content" id="myTabContent7">
+
+              <div class="tab-pane fade show active" id="home-justify-{{sub_prod.pk}}" role="tabpanel"
+                  aria-labelledby="home-tab-justify">
+                  {% include 'admin_/products/sub-product/edit/edit-subproduct-form.html' %}
+              </div>
+              <div class="tab-pane fade" id="profile-Images-{{sub_prod.pk}}" role="tabpanel" aria-labelledby="profile-tab-justify">
+                  {% include 'admin_/products/sub-product/edit/edit-image.html' %}
+                  <div class="row">
+                      <div class="col-lg-12">
+                          <button type="submit" class="btn btn-space btn-primary float-right">Continue</button>
+                      </div>
+                  </div>
+              </div>
+      </form>
+  </div>
+</div>
+</div>

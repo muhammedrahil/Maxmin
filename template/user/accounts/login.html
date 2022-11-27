@@ -1,0 +1,71 @@
+{% extends "user/base-layout.html" %}
+
+{% block content %}
+
+
+<div class="customer-login mt-5 mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4"></div>
+            <div class="col-lg-4 col-md-4">
+                <div class="account_form border" data-aos="fade-up" data-aos-delay="0">
+                    <form action="" method="POST" >
+
+                        {% include 'user/accounts/massage.html' %}
+
+                        {% csrf_token %}
+                        <div class="default-form-box">
+                            <label>Username or email <span>*</span></label>
+                            {{form.email}}
+                        </div>
+                        <div class="default-form-box">
+                            <label>Passwords <span>*</span></label>
+                            {{form.password}}
+                        </div>
+                        <div class="login_submit">
+                            <a class="float-right mb-4" href="{% url 'accounts:forget_password' %}">Forgotten your password?</a>
+                            <div class="mb-5">
+                                <label class="checkbox-default mb-5" for="offer">
+                                    <input type="checkbox" id="offer">
+                                    <span>Remember me</span>
+                                </label>
+                            </div>
+                        </div>
+                        <button class="btn btn-md btn-black-default-hover mb-4 col-lg-12 col-md-12"
+                            type="submit">login</button>
+                        <label for="">Not a Member? </label> <a href="{% url 'accounts:registration' %}"><u>Join Us.</u>
+                        </a>
+                    </form>
+
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4"></div>
+
+            <!--login area start-->
+        </div>
+    </div>
+</div> <!-- ...:::: End Customer Login Section :::... -->
+{% endblock %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script>
+
+
+
+
+
+$(document).ready(function () {
+    // messages timeout for 10 sec 
+    setTimeout(function () {
+        $('.message').fadeOut('slow');
+    }, 7000); // <-- time in milliseconds, 1000 =  1 sec
+
+    // delete message
+    $('.del-msg').on('click', function () {
+        $('.del-msg').parent().attr('style', 'display:none;');
+    })
+});
+</script>
+{% endblock %}

@@ -1,0 +1,18 @@
+<div class="login  mb-2">
+    <div class="row border shadow-sm bg-light p-2">
+        <div class="col-lg-12 col-12 mb-3">
+            <div class="d-flex col-lg-12 col-12">
+                <h5 class="font-weight-bold ml-3 ">4</h5>
+                <h5 class="font-weight-bold ml-3 d-flex">PAYMENT OPTIONS</h5>
+            </div>
+            <div id="payment_methods" {% if order == None %} style="display: none;" {% endif %}>
+                <div>
+                    {% include 'user/order/cash-on-delivery.html' %}
+                    {% include 'user/order/razorpay.html' %}
+                    {% include 'user/order/paypal.html' %}
+                </div>
+                {% include 'user/order/coupon.html' %}
+            </div>
+        </div>
+    </div>
+</div>

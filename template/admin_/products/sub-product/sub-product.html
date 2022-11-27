@@ -1,0 +1,190 @@
+{% extends "admin_/base.html" %}
+{% load static %}
+
+{% block static %}
+<link rel="stylesheet" type="text/css" href="{% static 'adm/assets/vendor/datatables/css/dataTables.bootstrap4.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'adm/assets/vendor/datatables/css/buttons.bootstrap4.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'adma/assets/vendor/datatables/css/select.bootstrap4.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'adm/assets/vendor/datatables/css/fixedHeader.bootstrap4.css' %}">
+<style>
+    .checked {
+      color: orange;
+    }
+    </style>
+{% endblock %}
+{% block pagetitle %} {{product.product_name}} {% endblock %}
+
+{% block navigate %}
+<li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+<li class="breadcrumb-item"><a href="#" class="breadcrumb-link">product</a></li>
+<li class="breadcrumb-item"><a href="#" class="breadcrumb-link">{{product.product_name}}</a></li>
+
+{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-5">
+        <!-- messages section  -->
+        <!-- <div class="message " id="size-massages" hidden>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                size already exists
+                <a href="#" class="del-msg">&times;</a>
+            </div>
+        </div> -->
+        <div class="card-body border-top bg-light mb-2 shadow rounded  text-center ">
+            <div class="row">
+                <div class="col-lg-3 col-3">
+                    <h4 class=" "><span class="font-weight-bold">CATEGORY :</span> {{product.category |title}}</h3>
+
+                </div>
+                <div class="col-lg-3 col-3">
+                    <h4 class=""><span class="font-weight-bold">BRAND :</span> {{product.product_brand |title}}
+                    </h3>
+
+                </div>
+                <div class="col-lg-3 col-3">
+                    <h4 class=""><span class="font-weight-bold">UNIT PRICE :</span> ₹{{product.unit_price}}</h3>
+
+                </div>
+                <div class="col-lg-3 col-3">
+                    <h4 class=""><span class="font-weight-bold">TOTEL STOCK :</span>
+                        {{product.product_totel_stoke}}</h3>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="card-body border-top bg-light mb-2 shadow rounded ">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" id="add-subproduct">ADD NEW</button>
+            <button type="button" class="btn btn-danger" id="add-subproduct-cancel" hidden>CANCEL</button>
+
+        </div>
+        <div class="row" id="add-subproduct-tab" hidden>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                {% include 'admin_/products/sub-product/add/add-sub-products.html' %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="card" id="sub-product-list-table">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            {% include 'admin_/products/sub-product/list-sub-product.html' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- include add.html  -->
+</div>
+{% endblock %}
+
+{% block script %}
+
+
+<script>
+    $('#add-subproduct').on('click', function (e) {
+        e.preventDefault()
+        $('#add-subproduct-tab').removeAttr('hidden');
+        $('#add-subproduct-cancel').removeAttr('hidden');
+        $('#add-subproduct').attr('hidden', '');
+        $('#sub-product-list-table').attr('hidden', '')
+    })
+    $('#add-subproduct-cancel').on('click', function (e) {
+        e.preventDefault()
+        $('#add-subproduct-tab').attr('hidden', '');
+        $('#add-subproduct-cancel').attr('hidden', '');
+        $('#add-subproduct').removeAttr('hidden');
+        $('#sub-product-list-table').removeAttr('hidden')
+
+    })
+
+
+
+
+    function showPreview(event, id) {
+        if (event.target.files.length > 0) {
+            var src = URL.createObjectURL(event.target.files[0]);
+            var preview = document.getElementById(id);
+            preview.src = src;
+            preview.style.display = "block";
+        }
+    }
+
+    function subproduct_qauntity_section(subproduct_id) {
+        let Base64 = { _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", encode: function (e) { var t = ""; var n, r, i, s, o, u, a; var f = 0; e = Base64._utf8_encode(e); while (f < e.length) { n = e.charCodeAt(f++); r = e.charCodeAt(f++); i = e.charCodeAt(f++); s = n >> 2; o = (n & 3) << 4 | r >> 4; u = (r & 15) << 2 | i >> 6; a = i & 63; if (isNaN(r)) { u = a = 64 } else if (isNaN(i)) { a = 64 } t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr.charAt(a) } return t }, decode: function (e) { var t = ""; var n, r, i; var s, o, u, a; var f = 0; e = e.replace(/[^A-Za-z0-9\+\/\=]/g, ""); while (f < e.length) { s = this._keyStr.indexOf(e.charAt(f++)); o = this._keyStr.indexOf(e.charAt(f++)); u = this._keyStr.indexOf(e.charAt(f++)); a = this._keyStr.indexOf(e.charAt(f++)); n = s << 2 | o >> 4; r = (o & 15) << 4 | u >> 2; i = (u & 3) << 6 | a; t = t + String.fromCharCode(n); if (u != 64) { t = t + String.fromCharCode(r) } if (a != 64) { t = t + String.fromCharCode(i) } } t = Base64._utf8_decode(t); return t }, _utf8_encode: function (e) { e = e.replace(/\r\n/g, "\n"); var t = ""; for (var n = 0; n < e.length; n++) { var r = e.charCodeAt(n); if (r < 128) { t += String.fromCharCode(r) } else if (r > 127 && r < 2048) { t += String.fromCharCode(r >> 6 | 192); t += String.fromCharCode(r & 63 | 128) } else { t += String.fromCharCode(r >> 12 | 224); t += String.fromCharCode(r >> 6 & 63 | 128); t += String.fromCharCode(r & 63 | 128) } } return t }, _utf8_decode: function (e) { var t = ""; var n = 0; var r = c1 = c2 = 0; while (n < e.length) { r = e.charCodeAt(n); if (r < 128) { t += String.fromCharCode(r); n++ } else if (r > 191 && r < 224) { c2 = e.charCodeAt(n + 1); t += String.fromCharCode((r & 31) << 6 | c2 & 63); n += 2 } else { c2 = e.charCodeAt(n + 1); c3 = e.charCodeAt(n + 2); t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63); n += 3 } } return t } }
+        let sub_encodedString = Base64.encode(String(subproduct_id));
+        let product_id = '{{product.id}}'
+        let prod_encodedString = Base64.encode(product_id);
+        window.location.href = 'http://{{current_site}}/product/add-sub-product-qauntity/' + prod_encodedString + '&' + sub_encodedString + ''
+    }
+
+    function sub_product_is_active(pk){
+        let data = new FormData()
+        data.append('pk',pk)
+        data.append("csrfmiddlewaretoken", '{{csrf_token}}')
+        axios.post('{% url "product:sub_product_active" %}', data).then((res) => {
+            if (res.data.data) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Active Success fully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                } else {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Deactivate Success fully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+        })
+    }
+
+
+    function sub_delete_product(pk){
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let data = new FormData();
+                data.append("csrfmiddlewaretoken", '{{csrf_token}}')
+                data.append("pk", pk)
+                axios.post('{% url "product:sub_delete_product" %}', data).then((res) => {
+                    if (res.data.data) {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Delete Success fully',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                    }
+                    window.location.reload()
+                })
+            }
+        })
+    }
+
+    function edit_sub_product(pk){
+        let Base64 = { _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", encode: function (e) { var t = ""; var n, r, i, s, o, u, a; var f = 0; e = Base64._utf8_encode(e); while (f < e.length) { n = e.charCodeAt(f++); r = e.charCodeAt(f++); i = e.charCodeAt(f++); s = n >> 2; o = (n & 3) << 4 | r >> 4; u = (r & 15) << 2 | i >> 6; a = i & 63; if (isNaN(r)) { u = a = 64 } else if (isNaN(i)) { a = 64 } t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr.charAt(a) } return t }, decode: function (e) { var t = ""; var n, r, i; var s, o, u, a; var f = 0; e = e.replace(/[^A-Za-z0-9\+\/\=]/g, ""); while (f < e.length) { s = this._keyStr.indexOf(e.charAt(f++)); o = this._keyStr.indexOf(e.charAt(f++)); u = this._keyStr.indexOf(e.charAt(f++)); a = this._keyStr.indexOf(e.charAt(f++)); n = s << 2 | o >> 4; r = (o & 15) << 4 | u >> 2; i = (u & 3) << 6 | a; t = t + String.fromCharCode(n); if (u != 64) { t = t + String.fromCharCode(r) } if (a != 64) { t = t + String.fromCharCode(i) } } t = Base64._utf8_decode(t); return t }, _utf8_encode: function (e) { e = e.replace(/\r\n/g, "\n"); var t = ""; for (var n = 0; n < e.length; n++) { var r = e.charCodeAt(n); if (r < 128) { t += String.fromCharCode(r) } else if (r > 127 && r < 2048) { t += String.fromCharCode(r >> 6 | 192); t += String.fromCharCode(r & 63 | 128) } else { t += String.fromCharCode(r >> 12 | 224); t += String.fromCharCode(r >> 6 & 63 | 128); t += String.fromCharCode(r & 63 | 128) } } return t }, _utf8_decode: function (e) { var t = ""; var n = 0; var r = c1 = c2 = 0; while (n < e.length) { r = e.charCodeAt(n); if (r < 128) { t += String.fromCharCode(r); n++ } else if (r > 191 && r < 224) { c2 = e.charCodeAt(n + 1); t += String.fromCharCode((r & 31) << 6 | c2 & 63); n += 2 } else { c2 = e.charCodeAt(n + 1); c3 = e.charCodeAt(n + 2); t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63); n += 3 } } return t } }
+        let encodedString = Base64.encode(String(pk));
+
+        window.location.href = 'http://{{current_site}}/product/edit-sub-product/' + encodedString + ''
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+{% endblock %}

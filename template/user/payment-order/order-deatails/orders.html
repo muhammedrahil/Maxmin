@@ -1,0 +1,139 @@
+{% extends "user/base-layout.html" %}
+{% load static %}
+
+{% block static %}
+
+<style>
+    .order-placed-history {
+        cursor: pointer;
+    }
+
+    .order-placed-history :hover {
+        border: 1px solid transparent;
+    }
+
+    @media only screen and (max-width: 768px) {
+
+        .sidebar-content .status-text {
+            font-size: 10px;
+        }
+    }
+</style>
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="container" style="height: 70px;"></div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-2 col-3">
+            {% include 'user/payment-order/order-deatails/filter.html' %}
+        </div>
+        <div class="col-lg-10 col-9" id="main">
+            <div class="row">
+                <div class="input-group mb-3 col-12">
+                    <input type="text" class="form-control" onkeyup="search_order()" id="search_order"
+                        placeholder="Search your order here" aria-label="Search" aria-describedby="basic-addon2">
+                </div>
+                <div id="order_products_list_ghg">
+                    <div id="order_products_list " class="col-12">
+                        {% for o in order %}
+                        {% for p in o.order.products.all %}
+                        <div class="row mb-2 border shadow-sm rounded p-4 order-placed-history"
+                            onclick="location.href='{% url 'payment:order_placed_history' o.order.orders_id  o.order.id  p.id  o.order_status.id o.id %}'">
+                            <div class="col-lg-6 col-12">
+                                <div class="row">
+                                    <div class="col-lg-3 col-7">
+                                        <img src="{{p.product.images2.url}}" alt="" class=" border rounded"
+                                            height="100px">
+                                    </div>
+                                    <div class="col-lg-9 col-5">
+                                        <p class="font-weight-bold">{{p.product.product.product_name}}</p>
+                                        <p>Size : {{p.product_quantity.product_size}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-12">
+                                <p>₹{{p.totel_qty_price}}</p>
+                            </div>
+                            {% include 'user/payment-order/order-deatails/status.html' %}
+                        </div>
+                        {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="page-pagination text-center mb-5" >
+                    <ul>
+                        {% if order.has_previous %}
+                        <li><a href="?page={{ order.previous_page_number }}"><i class="fa fa-long-arrow-left"
+                                    aria-hidden="true"></i></a></li>
+
+                        <li><a href="?page=1">1</a></li>
+                        {% endif %}
+                        <li><a href="?page={{ order.number }}" class="active">{{ order.number }}</a></li>
+                        {% if order.has_next %}
+
+                        <li><a href="?page={{ order.next_page_number }}"><i class="ion-ios-skipforward"></i></a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div> <!-- End Pagination -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+<script>
+    function search_order() {
+        let search_order = $('#search_order').val();
+        $.ajax({
+            type: "POST",
+            url: '{% url "payment:search_order" %}',
+            data: {
+                search_order,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                dataType: 'json',
+            },
+            success: function (data) {
+                $('#main #order_products_list_ghg ').html(data.template)
+                console.log('success')
+            },
+        });
+    }
+
+    $(document).ready(function () {
+        // $(".ajaxLoader").hide();
+        $(".filter-order").on('click', function () {
+            _filterObj = {}
+            $(".filter-order").each(function (index, ele) {
+                var _filterVal = $(this).val();
+                var _filterKey = $(this).data('filter');
+                _filterObj[_filterKey] = Array.from(document.querySelectorAll('input[data-filter=' + _filterKey + ']:checked')).map(function (el) {
+                    return el.value;
+                });
+            });
+            console.log(_filterObj)
+            $.ajax({
+                url: "{% url 'payment:filter_orders' %}",
+                type: "GET",
+                data: _filterObj,
+                dataType: 'json',
+                success: function (res) {
+                    $('#order_products_list_ghg').html(res.template)
+                }
+            });
+        });
+    });
+
+
+
+</script>
+
+{% endblock %}

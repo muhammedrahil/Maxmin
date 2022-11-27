@@ -1,0 +1,248 @@
+{% extends "admin_/base.html" %}
+{% load static %}
+
+{% block static %}
+<link rel="stylesheet" type="text/css" href="{% static 'adm/assets/vendor/datatables/css/dataTables.bootstrap4.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'adm/assets/vendor/datatables/css/buttons.bootstrap4.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'adma/assets/vendor/datatables/css/select.bootstrap4.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'adm/assets/vendor/datatables/css/fixedHeader.bootstrap4.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+<style>
+    .accordion {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        transition: 0.4s;
+    }
+
+    .active,
+    .accordion:hover {
+        background-color: #ccc;
+    }
+
+    .panel {
+        padding: 0 18px;
+        display: none;
+        background-color: white;
+        overflow: hidden;
+    }
+</style>
+{% endblock %}
+
+{% block pagetitle %} Brand List {% endblock %}
+{% block category %}active {% endblock %}
+
+{% block navigate %}
+<li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+<li class="breadcrumb-item"><a href="#" class="breadcrumb-link">category</a></li>
+<li class="breadcrumb-item"><a href="#" class="breadcrumb-link">brand</a></li>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-5">
+        <!-- messages section  -->
+        <div class="message " id="category-massages" hidden>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                brand already exists
+                <a href="#" class="del-msg">&times;</a>
+            </div>
+        </div>
+        <div class="card-body border-top bg-light mb-2 shadow rounded ">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Addbrand">ADD NEW</button>
+        </div>
+        <div class="tab-regular">
+            <div class="tab-content" id="myTabContent7">
+                <div class="tab-pane  active" id="profile-justify" role="tabpanel"
+                    aria-labelledby="profile-tab-justify">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" id="responce-data">
+                            {% include 'admin_/categories/brand/brand_list.html' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- include add.html  -->
+    {% include 'admin_/categories/brand/add.html' %}
+
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+
+    // function add_brand() {
+    //     var data = new FormData($('#brand').get(0));
+    //     console.log(data)
+
+    // let brand_name = $('#brand-name').val();
+    //     let brand_description = $('#brand-description').val();
+    //     let brand_image = $('#image-brand')[0].files[0];
+    //     // let form = new FormData($('#brand').get(0));
+    //     var _filterObj = {}
+    //     $('.brand_category').each(function () {
+    //         var _filterKey = $(this).data('filter');
+    //         _filterObj[_filterKey] = Array.from(document.querySelectorAll('input[data-filter=' + _filterKey + ']:checked')).map(function (el) {
+    //             return el.value;
+    //         })
+    //     });
+    //     _filterObj.brand_name = brand_name
+    //     _filterObj.brand_description = brand_description
+    //     var data = new FormData();
+    //     data.append('brand_image', brand_image)
+    //     _filterObj.data = brand_image
+    //     console.log(_filterObj);
+
+    //             $.ajax({
+    //                 url: '{% url "category:add_brand" %}',
+    //                 type: 'POST',
+    //                 data: {
+    //                     data,
+    //                     csrfmiddlewaretoken: '{{ csrf_token }}',
+    //                     contentType: false,
+    //                 },
+    //                 cache: false,
+    //                 processData: false,
+
+    //                 success: function (res) {
+    //                     if (res.data) {
+    //                         // $('#responce-data').html(res.template);
+
+    //                         Swal.fire({
+    //                             position: 'top-end',
+    //                             icon: 'success',
+    //                             title: 'Category edit Success fully',
+    //                             showConfirmButton: false,
+    //                             timer: 1500
+    //                         })
+    //                         // window.location.reload();
+
+    //                     }
+    //                 }
+    //             });
+    //     }
+
+    function deletebrand_category(id,pk) {
+        console.log(id)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'post',
+                    url: '{% url "category:delete_brand_category" %}',
+                    data: {
+                        pk,
+                        id,
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        dataType: 'json',
+                    },
+                    success: function (res) {
+                        $('#brand-list-main-div #brand_panel'+pk+' #brand_category-'+id+'-'+pk).remove();
+                        if (res.data) {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Delete Success fully',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+
+                        }
+                    }
+                });
+            }
+        })
+    }
+
+
+    function deletebrand(pk){
+        console.log(pk)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'post',
+                    url: '{% url "category:delete_brand" %}',
+                    data: {
+                        pk,
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        dataType: 'json',
+                    },
+                    success: function (res) {
+                        $('#brand-list-main-div #brand_accordion-'+pk).remove();
+                        if (res.data) {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Delete Success fully',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+
+                        }
+                    }
+                });
+            }
+        })
+    }
+
+
+    function brand_is_active(pk){
+        $.ajax({
+                    type: 'post',
+                    url: '{% url "category:brand_is_active" %}',
+                    data: {
+                        pk,
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        dataType: 'json',
+                    },
+                    success: function (res) {
+                        if (res.data) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Active Success fully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                } else {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Deactivate Success fully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+                    }
+                });
+    }
+</script>
+{% endblock %}

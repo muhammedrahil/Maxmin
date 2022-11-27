@@ -1,0 +1,373 @@
+{% extends "user/base-layout.html" %}
+{% load static %}
+
+
+{% block static %}
+<style>
+    @media (min-width:992px) {
+        .page-container {
+            max-width: 1140px;
+            margin: 0 auto
+        }
+
+        .page-sidenav {
+            display: block !important
+        }
+    }
+
+    .padding {
+        padding: 2rem
+    }
+
+    .w-32 {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: .85em
+    }
+
+    .tl-item .avatar {
+        z-index: 2
+    }
+
+    .circle {
+        border-radius: 500px
+    }
+
+    .gd-warning {
+        color: #fff;
+        border: none;
+        background: #f4c414 linear-gradient(45deg, #f4c414, #f45414)
+    }
+
+    .timeline {
+        position: relative;
+        border-color: rgba(160, 175, 185, .15);
+        padding: 0;
+        margin: 0
+    }
+
+    .p-4 {
+        padding: 1.5rem !important
+    }
+
+    .block,
+    .card {
+        background: #fff;
+        border-width: 0;
+        border-radius: .25rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+        margin-bottom: 1.5rem
+    }
+
+    .mb-4,
+    .my-4 {
+        margin-bottom: 1.5rem !important
+    }
+
+    .tl-item {
+        border-radius: 3px;
+        position: relative;
+        display: -ms-flexbox;
+        display: flex
+    }
+
+    .tl-item>* {
+        padding: 10px
+    }
+
+    .tl-item .avatar {
+        z-index: 2
+    }
+
+    .tl-item:last-child .tl-dot:after {
+        display: none
+    }
+
+    .tl-item.active .tl-dot:before {
+        border-color: #03ee79;
+        box-shadow: 0 0 0 4px rgba(68, 139, 255, .2)
+    }
+
+    .tl-item:last-child .tl-dot:after {
+        display: none
+    }
+
+    .tl-item.active .tl-dot:before {
+        border-color: #03ee79;
+        box-shadow: 0 0 0 4px rgba(68, 139, 255, .2)
+    }
+
+    .tl-dot {
+        position: relative;
+        border-color: rgba(160, 175, 185, .15)
+    }
+
+    .tl-dot:after,
+    .tl-dot:before {
+        content: '';
+        position: absolute;
+        border-color: inherit;
+        border-width: 2px;
+        border-style: solid;
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        top: 15px;
+        left: 50%;
+        transform: translateX(-50%)
+    }
+
+    .tl-dot:after {
+        width: 0;
+        height: auto;
+        top: 25px;
+        bottom: -15px;
+        border-right-width: 0;
+        border-top-width: 0;
+        border-bottom-width: 0;
+        border-radius: 0
+    }
+
+    tl-item.active .tl-dot:before {
+        border-color: #03ee79;
+        box-shadow: 0 0 0 4px rgba(68, 139, 255, .2)
+    }
+
+    .tl-dot {
+        position: relative;
+        border-color: rgba(160, 175, 185, .15)
+    }
+
+
+
+    .tl-dot:after {
+        width: 0;
+        height: auto;
+        top: 25px;
+        bottom: -15px;
+        border-right-width: 0;
+        border-top-width: 0;
+        border-bottom-width: 0;
+        border-radius: 0
+    }
+
+
+    .tl-date {
+        font-size: .85em;
+        margin-top: 2px;
+        min-width: 100px;
+        max-width: 100px
+    }
+
+
+    .b-warning {
+        border-color: #f4c414 !important;
+    }
+
+    .b-primary {
+        border-color: #059207 !important;
+    }
+
+    .b-danger {
+        border-color: #f54394 !important;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container" style="height: 70px;"></div>
+
+
+<div class="container border mb-2">
+    <div class="row m-5 ">
+        <h6 class="font-weight-bold"><strong>#{{order.orders_id}}</strong></h6>
+        <div class="col-lg-7 ">
+            <h6 class="font-weight-bold">Delivery Address</h6>
+            <h6>{{order.delivery_address.name}}</h6>
+            <p>{{order.delivery_address.address}} {{order.delivery_address.locality}}
+                {{order.delivery_address.city_district_town}} {{order.delivery_address.landmark}}
+                {{order.delivery_address.state}}
+                - {{order.delivery_address.pincode}}, {{order.delivery_address.state}}</p>
+            <h6 class="font-weight-bold">Phone number {{order.delivery_address.phone_no}} </h6>
+        </div>
+        <div class="col-lg-5 mt-5">
+            {% if orderstatus.delivered == True %}
+            <h6 class="font-weight-bold">More actions</h6>
+            <div class="d-flex mt-2">
+                <p>Download Invoice</p>
+                <a href="{% url 'payment:invoice' order.id orderstatus.id %}"
+                    class="btn border shadow-sm ml-3">Download</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container border mb-2">
+    <div class="row p-4 ">
+        <div class="col-lg-5 ">
+            <div class="row">
+                <div class="col-lg-3 col-4">
+                    <img src="{{cart.product.images2.url}}" alt="" class="mt-5 text-center" width="70px">
+                </div>
+                <div class="col-lg-8 col-8">
+                    <p class="font-weight-bold">{{cart.product.product.product_name}}</p>
+                    <p>{{cart.product.product.description}}</p>
+                    <p>size : {{cart.product_quantity.product_size}}</p>
+                </div>
+            </div>
+            <hr>
+        </div>
+
+
+
+        <div class="col-lg-5 d-flex col-6">
+
+            <div id="status_timeline">
+                {% include 'user/payment-order/status.html' %}
+            </div>
+
+            <svg fill="#2874F1" height="24" id="cancel_delivery_svg" viewBox="0 0 24 24" width="24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0h24v24H0z" fill="none" />
+                <path d="M20 8h-3V4H3c-1.1 0-2 .9-2 2v11h2c0 1.66 1.34 3 3 3s3-1.34 3-3h6c0 1.66 1.34 
+                3 3 3s3-1.34 3-3h2v-5l-3-4zM6 18.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67
+                 1.5 1.5-.67 1.5-1.5 1.5zm13.5-9l1.96 2.5H17V9.5h2.5zm-1.5 9c-.83 0-1.5-.67-1.5-1.5s.67-1.5
+                  1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
+            </svg>
+            <p class="ml-3 " id="cancel_delivery">
+                Delivery
+                expected by {{orderstatus.delivery_execept_date}} </p>
+        </div>
+
+        <div class="col-lg-2 col-6">
+            <div id="cancel_price">
+                <div class="d-flex">
+                    <p class="">₹{{cart.totel_qty_price}}</p>
+                    <div class="rounded-circle border ml-2 text-center shadow-sm" style="height: 20px;width: 20px;">
+                        <a href="javascript:void(0)" data-toggle="popover" title=" <p class='font-weight-bold d-inline'>
+                            {{payment_instence.payment_method}} :</p>  ₹{{payment_instence.payment_price}}  "
+                            data-content=" <h5 class='font-weight-bold text-success'>Offer Applied :</h5>  
+                        {% if order.coupen_active %}
+                        Coupen price : ₹{{order.coupon_price}} <p class='font-weight-bold text-success d-inline'> save </p> 
+                        ₹{{order.coupon_savings_price}}
+                        {% else %}
+                        Offer Price : ₹{{order.totel_offer_price}} <p class='font-weight-bold text-success d-inline'> save </p> 
+                        ₹{{order.offer_savings_price}}
+                        {% endif %}
+                        " data-placement="top">
+                            <spanclass="mb-2">?</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="cancel_link">
+                {% if orderstatus.Cancelled != True and orderstatus.delivered != True %}
+                <a href="javascript:void(0)" onclick="cancel_model({{order.totel_quantity}})"
+                    class="font-weight-bold text-primary"><u>Cancel ?</u></a>
+                {% endif %}
+            </div>
+            <div><a href="" class="font-weight-bold text-primary"><u>Need help ?</u></a></div>
+            {% if refund %}
+            <p><span class="font-weight-bold text-primary">Refund Date :</span><br>
+                {% for i in refund %}
+                {{i.execept_refund_date}}
+                {% endfor %}</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+{% include 'user/payment-order/cancelation-model.html' %}
+
+
+{% endblock %}
+
+
+{% block script %}
+
+<script>
+    function cancel_model(qty) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: " your cancel " + qty + " order items Go to easy Cancelation",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, cancel order'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $("#modalAddcart_cancel").modal('toggle');
+            }
+        })
+    }
+
+    $('#cancel_order').on('submit', function (e) {
+        let reasons = $('#reason_select option:selected').val();
+        let comments = $('#comments').val();
+        let order_status_id = '{{order_id}}'
+        let payment_status_id = '{{payment_id}}'
+
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: '{% url "payment:cancel_order" %}',
+            data: {
+                payment_status_id,
+                order_status_id,
+                reasons,
+                comments,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                dataType: 'json',
+            },
+            success: async function (data) {
+                $("#modalAddcart_cancel").modal('hide');
+                $('#cancel_link ').hide();
+                $(' #cancel_delivery ').hide();
+                $(' #cancel_price ').hide();
+                $('#cancel_delivery_svg').hide();
+                if (data.status) {
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Cancel order  Success fully , Refund will be be processed within ' + data.refund_exp_time + ' days',
+                        showConfirmButton: false,
+                        timer: 4500
+                    })
+                    window.location.reload()
+                } else {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Cancel order  Success fully ,' + data.refund_exp_time,
+                        showConfirmButton: false,
+                        timer: 4500
+                    })
+                }
+                $('#status_timeline').html(data.template);
+            },
+        });
+    });
+
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover({
+            trigger: 'focus',
+            // trigger: 'hover',
+            html: true,
+            content: function () {
+                return $(this).data('content') + '';
+            },
+            placement: 'top',
+            title: 'Toolbox'
+        })
+    });
+
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+{% endblock %}

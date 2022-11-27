@@ -1,0 +1,54 @@
+{% load static %}
+
+<!-- cash on delivery  -->
+<div class="col-lg-12">
+    <label class="radio mb-1" id="cash_on_delivery_method">
+        <input type="radio" name="cash_on_delivery" value="cash on delivery" data-bs-toggle="modal"
+        data-bs-target="#paypal_model">
+        <span>
+            <div class="col-lg-12" style="width: 42rem;">
+                <p class="font-weight-bold">PAYPAL PAYMENT</p>
+
+            </div>
+        </span>
+    </label>
+</div>
+
+
+
+ <!-- Start Modal Add cart -->
+ <div class="modal fade" id="paypal_model" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="modal-add-cart-product-img">
+                                        <img class="img-fluid mt-3"
+                                            src="{% static 'user/images/logo/paypal.jpg' %}" alt=""  width="100px">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div id="paypal-button-container"></div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 modal-border">
+                            <div class="modal-add-cart-product-img">
+                                <img class="img-fluid"
+                                    src="{% static 'user/images/logo/paypal-bulk.png' %}" alt="" height="144px">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- End Modal Add cart -->
+
+
+

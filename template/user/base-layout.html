@@ -1,0 +1,764 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Maxmin</title>
+
+    <!-- ::::::::::::::Favicon icon::::::::::::::-->
+    <link rel="shortcut icon" href="https://cdn.shopify.com/s/files/1/0003/0408/7087/files/logo_180x.png?v=1521532507"
+        type="image/png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css  ">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
+    <!-- ::::::::::::::All CSS Files here :::::::::::::: -->
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="{% static 'user/css/vendor/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'user/css/vendor/ionicons.css' %}">
+    <link rel="stylesheet" href="{% static 'user/css/vendor/simple-line-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'user/css/vendor/jquery-ui.min.css' %}">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="{% static 'user/css/plugins/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" href="{% static 'user/css/plugins/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'user/css/plugins/venobox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'user/css/plugins/jquery.lineProgressbar.css' %}">
+    <link rel="stylesheet" href="{% static 'user/css/plugins/aos.min.css' %}">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'user/css/style.css' %}">
+
+    <!-- Use the minified version files listed below for better performance and remove the files listed above -->
+    <!-- <link rel="stylesheet" href="{% static 'user/css/vendor/vendor.min.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'user/css/plugins/plugins.min.css' %}">
+    <link rel="stylesheet" href="{% static 'user/css/style.min.css' %}">
+    <link rel="stylesheet" href="{% static 'user/css/new1.css' %}">
+    {% block static %}
+
+    {% endblock %}
+</head>
+
+<body>
+    <!-- Start Header Area -->
+    <header class="header-section d-none d-xl-block">
+        <div class="header-wrapper">
+            <div class="header-bottom header-bottom-color--golden section-fluid sticky-header sticky-color--golden">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 d-flex align-items-center justify-content-between">
+                            <!-- Start Header Logo -->
+                            <div class="header-logo">
+                                <div class="logo">
+                                    <a href="{% url 'landing:landing_page' %}"><img
+                                            src="https://cdn.shopify.com/s/files/1/0003/0408/7087/files/logo_180x.png?v=1521532507"
+                                            alt=""></a>
+                                </div>
+                            </div>
+                            <!-- End Header Logo -->
+                            <div class="main-menu menu-color--black menu-hover-color--golden">
+                                {% load mptt_tags %}
+                                <nav>
+                                    <ul>
+                                       
+                                        {% for g in gender_category %}
+                                        <li class="has-dropdown has-megaitem">
+                                            <a href="javascript:void(0)">{{g.gender}}<i
+                                                    class="fa fa-angle-down"></i></a>
+                                            <!-- Mega Menu -->
+                                            <div class="mega-menu">
+                                                <ul class="mega-menu-inner">
+                                                    {% recursetree context_category %}
+                                                    <li class="mega-menu-item">
+                                                        <a href="{% url 'product:allcategories' pk=node.id product_name=node.slug  genter=g.pk   %}"
+                                                            class="mega-menu-item-title">{{ node.category }}</a>
+                                                        <ul class="mega-menu-sub">
+                                                            {% if not node.is_leaf_node %}
+                                                            <li><a href="product-details-tab-left.html">
+                                                                    {{ children }}</a></li>
+                                                            {% endif %}
+                                                        </ul>
+                                                    </li>
+                                                    {% endrecursetree %}
+                                                </ul>
+                                                <div class="menu-banner">
+                                                    <a href="#" class="menu-banner-link">
+                                                        <img class="menu-banner-img"
+                                                            src="{% static 'user/images/banner/menu-banner.jpg' %}"
+                                                            alt="">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+
+                                        <li class="has-dropdown">
+                                            <a class="active main-menu-link" href="{% url 'accounts:accounts' %}">Profile</a>
+                                        </li>
+                                        <li class="has-dropdown">
+                                            <a class="active main-menu-link" href="{% url 'payment:order_deatails' %}">Orders</a>
+                                        </li>                                        
+                                    </ul>
+                                </nav>
+                            </div>
+                            <!-- Start Header Action Link -->
+                            <ul class="header-action-link action-color--black action-hover-color--golden">
+                                {% if user.is_authenticated %}
+                                <li>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <a href="{% url 'accounts:login' %}">
+                                        <i class="bi bi-person" title="Login"></i>
+                                    </a>
+                                </li>
+                                {% endif %}
+                                <li>
+                                    <!-- <a href="#offcanvas-wishlish" class="offcanvas-toggle">
+                                        <i class="icon-heart"></i>
+                                        <span class="item-count">3</span>
+                                    </a> -->
+                                </li>
+                                <li>
+                                    <a href="#offcanvas-add-cart" class="offcanvas-toggle">
+                                        <i class="icon-bag"></i>
+                                        {% if request.session.length_product %}
+                                        <span
+                                            class="item-count cart-count-lenght">{{request.session.length_product}}</span>
+                                        {% else %}
+                                        <span class="item-count cart-count-lenght">0</span>
+                                        {% endif %}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#search">
+                                        <i class="icon-magnifier"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#offcanvas-about" class="offacnvas offside-about offcanvas-toggle">
+                                        <i class="icon-menu"></i>
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <!-- End Header Action Link -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Start Header Area -->
+
+    <!-- Start Mobile Header -->
+    <div class="mobile-header mobile-header-bg-color--golden section-fluid d-lg-block d-xl-none">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 d-flex align-items-center justify-content-between">
+                    <!-- Start Mobile Left Side -->
+                    <div class="mobile-header-left">
+                        <ul class="mobile-menu-logo">
+                            <li>
+                                <a href="index.html">
+                                    <div class="logo">
+                                        <img src="assets/images/logo/logo_black.png" alt="">
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Mobile Left Side -->
+
+                    <!-- Start Mobile Right Side -->
+                    <div class="mobile-right-side">
+                        <ul class="header-action-link action-color--black action-hover-color--golden">
+                            <li>
+                                <a href="#search">
+                                    <i class="icon-magnifier"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <!-- <a href="#offcanvas-wishlish" class="offcanvas-toggle">
+                                    <i class="icon-heart"></i>
+                                    <span class="item-count">3</span>
+                                </a> -->
+                            </li>
+                            <li>
+                                <a href="#offcanvas-add-cart" class="offcanvas-toggle">
+                                    <i class="icon-bag"></i>
+                                    <span class="item-count">3</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#mobile-menu-offcanvas" class="offcanvas-toggle offside-menu">
+                                    <i class="icon-menu"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Mobile Right Side -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Mobile Header -->
+
+    <!--  Start Offcanvas Mobile Menu Section -->
+    <div id="mobile-menu-offcanvas" class="offcanvas offcanvas-rightside offcanvas-mobile-menu-section">
+        <!-- Start Offcanvas Header -->
+        <div class="offcanvas-header text-right">
+            <button class="offcanvas-close"><i class="ion-android-close"></i></button>
+        </div> <!-- End Offcanvas Header -->
+        <!-- Start Offcanvas Mobile Menu Wrapper -->
+        <div class="offcanvas-mobile-menu-wrapper">
+            <!-- Start Mobile Menu  -->
+            <div class="mobile-menu-bottom">
+                <!-- Start Mobile Menu Nav -->
+                <div class="offcanvas-menu">
+                    <ul>
+                        {% for g in gender_category %}
+                        <li>
+                            <a href="javascript:void(0)"><span>{{g.gender}}</span></a>
+                            <ul class="mobile-sub-menu">
+                                {% recursetree context_category %}
+                                <li>
+                                    <a
+                                        href="{% url 'product:allcategories' pk=node.id product_name=node.slug  genter=1   %}">
+                                        {{node.category }}</a>
+                                    <ul class="mobile-sub-menu">
+                                        {% if not node.is_leaf_node %}
+                                        <li><a href="#">{{ children }}</a></li>
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                                {% endrecursetree %}
+                            </ul>
+                        </li>
+                        {% endfor %}
+                        <li class="has-dropdown">
+                            <a class="active main-menu-link" href="{% url 'accounts:accounts' %}">Profile</a>
+                        </li>
+                        <li class="has-dropdown">
+                            <a class="active main-menu-link" href="{% url 'payment:order_deatails' %}">Orders</a>
+                        </li>         
+
+                    </ul>
+                </div> <!-- End Mobile Menu Nav -->
+            </div> <!-- End Mobile Menu -->
+
+            <!-- Start Mobile contact Info -->
+            <div class="mobile-contact-info">
+                <div class="logo">
+                    <a href="{% url 'landing:landing_page' %}"><img src="https://cdn.shopify.com/s/files/1/0003/0408/7087/files/logo_180x.png?v=1521532507" alt=""></a>
+                </div>
+                <address class="address">
+                    {% if request.user %}
+                    <span>Name: {{request.user.fullname}}</span>
+                    <span>Phone Number: +91{{request.user.phone_no}}</span>
+                    <span>Email: {{request.user.email}}</span>
+                    {% endif %}
+                </address>
+    
+                <ul class="social-link">
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+    
+                <ul class="user-link">
+                    <li><a href="{% url 'cart:cart' %}">Cart</a></li>
+                    <li><a href="{% url 'cart:checkout' %}">Checkout</a></li>
+                    <li><a href="{% url 'cart:user_coupen' %}">Coupen</a></li>
+                    {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
+                    {% endif %}
+    
+                </ul>
+            </div>
+            <!-- End Mobile contact Info -->
+
+        </div> <!-- End Offcanvas Mobile Menu Wrapper -->
+    </div> <!-- ...:::: End Offcanvas Mobile Menu Section:::... -->
+
+    <!-- Start Offcanvas Mobile Menu Section -->
+    <div id="offcanvas-about" class="offcanvas offcanvas-rightside offcanvas-mobile-about-section">
+        <!-- Start Offcanvas Header -->
+        <div class="offcanvas-header text-right">
+            <button class="offcanvas-close"><i class="ion-android-close"></i></button>
+        </div> <!-- End Offcanvas Header -->
+        <!-- Start Offcanvas Mobile Menu Wrapper -->
+        <!-- Start Mobile contact Info -->
+        <div class="mobile-contact-info">
+            <div class="logo">
+                <a href="{% url 'landing:landing_page' %}"><img src="https://cdn.shopify.com/s/files/1/0003/0408/7087/files/logo_180x.png?v=1521532507" alt=""></a>
+            </div>
+            <address class="address">
+                {% if request.user %}
+                <span>Name: {{request.user.fullname}}</span>
+                <span>Phone Number: +91{{request.user.phone_no}}</span>
+                <span>Email: {{request.user.email}}</span>
+                {% endif %}
+            </address>
+
+            <ul class="social-link">
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+            </ul>
+            <ul class="user-link">
+                <li><a href="{% url 'cart:cart' %}">Cart</a></li>
+                <li><a href="{% url 'cart:checkout' %}">Checkout</a></li>
+                <li><a href="{% url 'cart:user_coupen' %}">Coupen</a></li>
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <!-- End Mobile contact Info -->
+    </div> <!-- ...:::: End Offcanvas Mobile Menu Section:::... -->
+
+    <!-- Start Offcanvas Addcart Section -->
+    <div id="offcanvas-add-cart" class="offcanvas offcanvas-rightside offcanvas-add-cart-section">
+        <!-- Start Offcanvas Header -->
+        <div class="offcanvas-header text-right">
+            <button class="offcanvas-close"><i class="ion-android-close"></i></button>
+        </div> <!-- End Offcanvas Header -->
+
+        <!-- Start  Offcanvas Addcart Wrapper -->
+        <div class="offcanvas-add-cart-wrapper">
+            <h4 class="offcanvas-title">Shopping Cart</h4>
+            <ul class="offcanvas-cart">
+
+
+
+                {% for i in cart_products %}  
+                <li class="offcanvas-cart-item-single">
+                    <div class="offcanvas-cart-item-block">
+                        <a href="#" class="offcanvas-cart-item-image-link">
+                            <img src="{{i.product.images.url}}" alt=""
+                                class="offcanvas-cart-image">
+                        </a>
+                        <div class="offcanvas-cart-item-content">
+                            <a href="#" class="offcanvas-cart-item-link">{{i.product.product.product_name}}</a>
+                            <div class="offcanvas-cart-item-details">
+                                <span class="offcanvas-cart-item-details-quantity">{{i.product_qty}} x </span>
+                                <span class="offcanvas-cart-item-details-price">₹ {{i.product_price}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offcanvas-cart-item-delete text-right">
+                        <!-- <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a> -->
+                    </div>
+                </li>
+                {% endfor %}
+
+                {% for key,item in cart_data.items %}
+                <li class="offcanvas-cart-item-single">
+                    <div class="offcanvas-cart-item-block">
+                        <a href="#" class="offcanvas-cart-item-image-link">
+                            <img src="{{item.image}}" alt=""
+                                class="offcanvas-cart-image">
+                        </a>
+                        <div class="offcanvas-cart-item-content">
+                            <a href="#" class="offcanvas-cart-item-link">{{item.cart_product}}</a>
+                            <div class="offcanvas-cart-item-details">
+                                <span class="offcanvas-cart-item-details-quantity">{{item.product_qty}} x </span>
+                                <span class="offcanvas-cart-item-details-price">₹ {{item.price}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offcanvas-cart-item-delete text-right">
+                        <!-- <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a> -->
+                    </div>
+                </li>
+                {% endfor %}
+                
+            </ul>
+            <div class="offcanvas-cart-total-price">
+                <span class="offcanvas-cart-total-price-text">Subtotal:</span>
+                <span class="offcanvas-cart-total-price-value">₹ {{subtotel}}</span>
+            </div>
+            <ul class="offcanvas-cart-action-button">
+                <li><a href="{% url 'cart:cart' %}" class="btn btn-block btn-golden">View Cart</a></li>
+                <li><a href="{% url 'cart:checkout' %}" class=" btn btn-block btn-golden mt-5">Checkout</a></li>
+            </ul>
+        </div> <!-- End  Offcanvas Addcart Wrapper -->
+
+    </div> <!-- End  Offcanvas Addcart Section -->
+
+    <!-- Start Offcanvas Mobile Menu Section -->
+    <!-- <div id="offcanvas-wishlish" class="offcanvas offcanvas-rightside offcanvas-add-cart-section">
+        <div class="offcanvas-header text-right">
+            <button class="offcanvas-close"><i class="ion-android-close"></i></button>
+
+        <div class="offcanvas-wishlist-wrapper">
+            <h4 class="offcanvas-title">Wishlist</h4>
+            <ul class="offcanvas-wishlist">
+                <li class="offcanvas-wishlist-item-single">
+                    <div class="offcanvas-wishlist-item-block">
+                        <a href="#" class="offcanvas-wishlist-item-image-link">
+                            <img src="assets/images/product/default/home-1/default-1.jpg" alt=""
+                                class="offcanvas-wishlist-image">
+                        </a>
+                        <div class="offcanvas-wishlist-item-content">
+                            <a href="#" class="offcanvas-wishlist-item-link">Car Wheel</a>
+                            <div class="offcanvas-wishlist-item-details">
+                                <span class="offcanvas-wishlist-item-details-quantity">1 x </span>
+                                <span class="offcanvas-wishlist-item-details-price">$49.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offcanvas-wishlist-item-delete text-right">
+                        <a href="#" class="offcanvas-wishlist-item-delete"><i class="fa fa-trash-o"></i></a>
+                    </div>
+                </li>
+                <li class="offcanvas-wishlist-item-single">
+                    <div class="offcanvas-wishlist-item-block">
+                        <a href="#" class="offcanvas-wishlist-item-image-link">
+                            <img src="assets/images/product/default/home-2/default-1.jpg" alt=""
+                                class="offcanvas-wishlist-image">
+                        </a>
+                        <div class="offcanvas-wishlist-item-content">
+                            <a href="#" class="offcanvas-wishlist-item-link">Car Vails</a>
+                            <div class="offcanvas-wishlist-item-details">
+                                <span class="offcanvas-wishlist-item-details-quantity">3 x </span>
+                                <span class="offcanvas-wishlist-item-details-price">$500.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offcanvas-wishlist-item-delete text-right">
+                        <a href="#" class="offcanvas-wishlist-item-delete"><i class="fa fa-trash-o"></i></a>
+                    </div>
+                </li>
+                <li class="offcanvas-wishlist-item-single">
+                    <div class="offcanvas-wishlist-item-block">
+                        <a href="#" class="offcanvas-wishlist-item-image-link">
+                            <img src="assets/images/product/default/home-3/default-1.jpg" alt=""
+                                class="offcanvas-wishlist-image">
+                        </a>
+                        <div class="offcanvas-wishlist-item-content">
+                            <a href="#" class="offcanvas-wishlist-item-link">Shock Absorber</a>
+                            <div class="offcanvas-wishlist-item-details">
+                                <span class="offcanvas-wishlist-item-details-quantity">1 x </span>
+                                <span class="offcanvas-wishlist-item-details-price">$350.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offcanvas-wishlist-item-delete text-right">
+                        <a href="#" class="offcanvas-wishlist-item-delete"><i class="fa fa-trash-o"></i></a>
+                    </div>
+                </li>
+            </ul>
+            <ul class="offcanvas-wishlist-action-button">
+                <li><a href="#" class="btn btn-block btn-golden">View wishlist</a></li>
+            </ul>
+        </div>
+    </div> -->
+    
+    <!-- End Offcanvas Mobile Menu Section -->      
+
+    <!-- Start Offcanvas Search Bar Section -->
+    <div id="search" class="search-modal">
+        <button type="button" class="close">×</button>
+        <form>
+            <input type="search" placeholder="type keyword(s) here" />
+            <button type="submit" class="btn btn-lg btn-golden">Search</button>
+        </form>
+
+    </div>
+    <!-- End Offcanvas Search Bar Section -->
+
+    <!-- Offcanvas Overlay -->
+    <div class="offcanvas-overlay"></div>
+
+
+
+    {% block content %}
+
+    {% endblock %}
+
+
+    <!-- Start Footer Section -->
+    <footer class="footer-section footer-bg">
+        <div class="footer-wrapper">
+            <!-- Start Footer Top -->
+            <div class="footer-top">
+                <div class="container">
+                    <div class="row mb-n6">
+                        <div class="col-lg-4 col-sm-6 mb-6">
+                            <!-- Start Footer Single Item -->
+                            <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up"
+                                data-aos-delay="0">
+                                <h5 class="title">INFORMATION</h5>
+                                <ul class="footer-nav">
+                                    <li><a href="#">Delivery Information</a></li>
+                                    <li><a href="#">Terms & Conditions</a></li>
+                                    <li><a href="#">Contact</a></li>
+                                    <li><a href="#">Returns</a></li>
+                                </ul>
+                            </div>
+                            <!-- End Footer Single Item -->
+                        </div>
+                        <div class="col-lg-4 col-sm-6 mb-6">
+                            <!-- Start Footer Single Item -->
+                            <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up"
+                                data-aos-delay="200">
+                                <h5 class="title">MY ACCOUNT</h5>
+                                <ul class="footer-nav">
+                                    <li><a href="{% url 'accounts:accounts' %}">My account</a></li>
+                                    <li><a href="{% url 'payment:order_deatails' %}">Order History</a></li>
+                                </ul>
+                            </div>
+                            <!-- End Footer Single Item -->
+                        </div>
+                        <div class="col-lg-4 col-sm-6 mb-6">
+                            <!-- Start Footer Single Item -->
+                            <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up"
+                                data-aos-delay="600">
+                                <h5 class="title">ABOUT US</h5>
+                                <div class="footer-about">
+                                    <address class="address">
+                                        <span>Address: Muhammed Rahil M.</span><br>
+                                        <span>Email: mrahil7510@gmail.com</span><br>
+                                        <span>phone Number: 7592978136</span>
+
+                                    </address>
+                                </div>
+                            </div>
+                            <!-- End Footer Single Item -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Footer Top -->
+
+          
+
+            
+        </div>
+    </footer>
+    <!-- End Footer Section -->
+
+    <!-- material-scrolltop button -->
+    <button class="material-scrolltop" type="button"></button>
+
+
+
+    <!-- Start Modal Quickview cart -->
+    <div class="modal fade" id="modalQuickview" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col text-right">
+                                <button type="button" class="close modal-close" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                    <span aria-hidden="true"> <i class="fa fa-times"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="product-details-gallery-area mb-7">
+                                    <!-- Start Large Image -->
+                                    <div class="product-large-image modal-product-image-large swiper-container">
+                                        <div class="swiper-wrapper">
+                                            <div class="product-image-large-image swiper-slide img-responsive">
+                                                <img src="assets/images/product/default/home-1/default-1.jpg" alt="">
+                                            </div>
+                                            <div class="product-image-large-image swiper-slide img-responsive">
+                                                <img src="assets/images/product/default/home-1/default-2.jpg" alt="">
+                                            </div>
+                                            <div class="product-image-large-image swiper-slide img-responsive">
+                                                <img src="assets/images/product/default/home-1/default-3.jpg" alt="">
+                                            </div>
+                                            <div class="product-image-large-image swiper-slide img-responsive">
+                                                <img src="assets/images/product/default/home-1/default-4.jpg" alt="">
+                                            </div>
+                                            <div class="product-image-large-image swiper-slide img-responsive">
+                                                <img src="assets/images/product/default/home-1/default-5.jpg" alt="">
+                                            </div>
+                                            <div class="product-image-large-image swiper-slide img-responsive">
+                                                <img src="assets/images/product/default/home-1/default-6.jpg" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End Large Image -->
+                                    <!-- Start Thumbnail Image -->
+                                    <div
+                                        class="product-image-thumb modal-product-image-thumb swiper-container pos-relative mt-5">
+                                        <div class="swiper-wrapper">
+                                            <div class="product-image-thumb-single swiper-slide">
+                                                <img class="img-fluid"
+                                                    src="assets/images/product/default/home-1/default-1.jpg" alt="">
+                                            </div>
+                                            <div class="product-image-thumb-single swiper-slide">
+                                                <img class="img-fluid"
+                                                    src="assets/images/product/default/home-1/default-2.jpg" alt="">
+                                            </div>
+                                            <div class="product-image-thumb-single swiper-slide">
+                                                <img class="img-fluid"
+                                                    src="assets/images/product/default/home-1/default-3.jpg" alt="">
+                                            </div>
+                                            <div class="product-image-thumb-single swiper-slide">
+                                                <img class="img-fluid"
+                                                    src="assets/images/product/default/home-1/default-4.jpg" alt="">
+                                            </div>
+                                            <div class="product-image-thumb-single swiper-slide">
+                                                <img class="img-fluid"
+                                                    src="assets/images/product/default/home-1/default-5.jpg" alt="">
+                                            </div>
+                                            <div class="product-image-thumb-single swiper-slide">
+                                                <img class="img-fluid"
+                                                    src="assets/images/product/default/home-1/default-6.jpg" alt="">
+                                            </div>
+                                        </div>
+                                        <!-- Add Arrows -->
+                                        <div class="gallery-thumb-arrow swiper-button-next"></div>
+                                        <div class="gallery-thumb-arrow swiper-button-prev"></div>
+                                    </div>
+                                    <!-- End Thumbnail Image -->
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="modal-product-details-content-area">
+                                    <!-- Start  Product Details Text Area-->
+                                    <div class="product-details-text">
+                                        <h4 class="title">Nonstick Dishwasher PFOA</h4>
+                                        <div class="price"><del>$70.00</del>$80.00</div>
+                                    </div> <!-- End  Product Details Text Area-->
+                                    <!-- Start Product Variable Area -->
+                                    <div class="product-details-variable">
+                                        <!-- Product Variable Single Item -->
+                                        <div class="variable-single-item">
+                                            <span>Color</span>
+                                            <div class="product-variable-color">
+                                                <label for="modal-product-color-red">
+                                                    <input name="modal-product-color" id="modal-product-color-red"
+                                                        class="color-select" type="radio" checked>
+                                                    <span class="product-color-red"></span>
+                                                </label>
+                                                <label for="modal-product-color-tomato">
+                                                    <input name="modal-product-color" id="modal-product-color-tomato"
+                                                        class="color-select" type="radio">
+                                                    <span class="product-color-tomato"></span>
+                                                </label>
+                                                <label for="modal-product-color-green">
+                                                    <input name="modal-product-color" id="modal-product-color-green"
+                                                        class="color-select" type="radio">
+                                                    <span class="product-color-green"></span>
+                                                </label>
+                                                <label for="modal-product-color-light-green">
+                                                    <input name="modal-product-color"
+                                                        id="modal-product-color-light-green" class="color-select"
+                                                        type="radio">
+                                                    <span class="product-color-light-green"></span>
+                                                </label>
+                                                <label for="modal-product-color-blue">
+                                                    <input name="modal-product-color" id="modal-product-color-blue"
+                                                        class="color-select" type="radio">
+                                                    <span class="product-color-blue"></span>
+                                                </label>
+                                                <label for="modal-product-color-light-blue">
+                                                    <input name="modal-product-color"
+                                                        id="modal-product-color-light-blue" class="color-select"
+                                                        type="radio">
+                                                    <span class="product-color-light-blue"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <!-- Product Variable Single Item -->
+                                        <div class="d-flex align-items-center flex-wrap">
+                                            <div class="variable-single-item ">
+                                                <span>Quantity</span>
+                                                <div class="product-variable-quantity">
+                                                    <input min="1" max="100" value="1" type="number">
+                                                </div>
+                                            </div>
+
+                                            <div class="product-add-to-cart-btn">
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddcart">Add To
+                                                    Cart</a>
+                                            </div>
+                                        </div>
+                                    </div> <!-- End Product Variable Area -->
+                                    <div class="modal-product-about-text">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste
+                                            laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam
+                                            in quos qui nemo ipsum numquam, reiciendis maiores quidem aperiam, rerum vel
+                                            recusandae</p>
+                                    </div>
+                                    <!-- Start  Product Details Social Area-->
+                                    <div class="modal-product-details-social">
+                                        <span class="title">SHARE THIS PRODUCT</span>
+                                        <ul>
+                                            <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a></li>
+                                            <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a></li>
+                                            <li><a href="#" class="pinterest"><i class="fa fa-pinterest"></i></a></li>
+                                            <li><a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
+                                            </li>
+                                            <li><a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a></li>
+                                        </ul>
+
+                                    </div> <!-- End  Product Details Social Area-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Modal Quickview cart -->
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {% block script %}
+
+    {% endblock %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <!-- ::::::::::::::All JS Files here :::::::::::::: -->
+    <!-- Global Vendor, plugins JS -->
+    <script src="{% static 'user/js/vendor/modernizr-3.11.2.min.js' %}"></script>
+    <script src="{% static 'user/js/vendor/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'user/js/vendor/jquery-migrate-3.3.0.min.js' %}"></script>
+    <script src="{% static 'user/js/vendor/popper.min.js' %}"></script>
+    <script src="{% static 'user/js/vendor/bootstrap.min.js' %}"></script>
+    <script src="{% static 'user/js/vendor/jquery-ui.min.js' %}"></script>
+
+    <!--Plugins JS-->
+    <script src="{% static 'user/js/plugins/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'user/js/plugins/material-scrolltop.js' %}"></script>
+    <script src="{% static 'user/js/plugins/jquery.zoom.min.js' %}"></script>
+    <script src="{% static 'user/js/plugins/venobox.min.js' %}"></script>
+    <script src="{% static 'user/js/plugins/jquery.waypoints.js' %}"></script>
+    <script src="{% static 'user/js/plugins/jquery.lineProgressbar.js' %}"></script>
+    <script src="{% static 'user/js/plugins/aos.min.js' %}"></script>
+    <script src="{% static 'user/js/plugins/jquery.instagramFeed.js' %}"></script>
+    <script src="{% static 'user/js/plugins/ajax-mail.js' %}"></script>
+
+    <!-- Use the minified version files listed below for better performance and remove the files listed above -->
+    <script src="{% static 'user/js/vendor/vendor.min.js' %}"></script>
+    <script src="{% static 'user/js/plugins/plugins.min.js' %}"></script>
+
+    <!-- Main JS -->
+    <script src="{% static 'user/js/main.js' %}"></script>
+    <script src="{% static 'user/js/new.js' %}"></script>
+
+</body>
+
+
+
+</html>

@@ -1,0 +1,75 @@
+<div class="login  mb-2 ">
+    <div class="row p-2 border shadow-sm bg-light">
+        <div class="col-lg-12 col-12 mb-3 " id='delivery-address-form'>
+            <div class="row ">
+                <div class="d-flex col-lg-9 col-9">
+                    <h5 class="font-weight-bold ml-3 ">2</h5>
+                    <h5 class="font-weight-bold ml-3 d-flex">DELIVERY ADDRESS<span id="check_checkout_address_check" 
+                        {% if order == None %} style="display: none;" {% endif %}>&nbsp; &check;</span></h5>
+                </div>
+                <div class="col-lg-3 col-3 ">
+                    <a href="javascript:void(0)" class="btn border float-right mt-4 "
+                        onclick="check_checkout_address_check_Change()" 
+                        {% if order == None %} style="display: none;" {% endif %} 
+                        id="check_checkout_address_check_Change">Change</a>
+                </div>
+
+                <div id="checkout_delivery_address">
+                    {% if order %}
+                    <p><span class="font-weight-bold">{{order.delivery_address.name}}
+                            &nbsp;{{order.delivery_address.phone_no}}</span>&nbsp;{{order.delivery_address.address}}
+                        &nbsp;{{order.delivery_address.locality}}&nbsp;{{order.delivery_address.city_district_town}}
+                        &nbsp;{{order.delivery_address.landmark}}&nbsp;{{order.delivery_address.state}}&nbsp;{{order.delivery_address.pincode}}
+                    </p>
+                    {% endif %}
+                </div>
+
+            </div>
+            <div id="checkout_address" style="display: none;">
+                <div id="check-user-address-div">
+                    <hr>
+                    {% for u in user_address %}
+                    <div class="row ">
+                        <label class="radio mb-1 list_checkout_address " id="list_checkout_address-{{u.id}}">
+                            <input type="radio" name="check_checkout_address" class="check_checkout_address"
+                                value="{{u.id}}" onclick="check_checkout_address({{u.id}})" required
+                                 {% if order %}
+                                 {%  if order.delivery_address.id == u.id %} checked {% endif %} {% endif %}>
+                            <span>
+                                <div class="col-lg-12 col-12 delivery-address-mediaquary">
+                                    <a href="javascript:void(0)" class="m-2 float-right"
+                                        onclick="edit_checkout({{u.id}})">
+                                        <p>Edit</p>
+                                    </a>
+                                    <div>
+                                        <div style="height: 28px;width: 60px; background-color: rgb(193, 184, 184);"
+                                            class="text-white rounded text-center font-weight-bold mb-2">
+                                            {{u.address_type}}
+                                        </div>
+                                        <p class="font-weight-bold">{{u.name}} &nbsp;&nbsp;{{u.phone_no}}</p>
+                                        <p>{{u.address}}&nbsp;{{u.locality}}&nbsp;{{u.city_district_town}}&nbsp;{{u.landmark}}
+                                        </p>
+                                        <p>{{u.state}}&nbsp;{{u.pincode}}</p>
+                                    </div>
+                                    <a href="javascript:void(0)" class="btn btn-primary text-light delivery_address_btn"
+                                        id="delivery_address_btn-{{u.id}}" onclick="delivery_address({{u.id}})"
+                                        style="display: none;">DELIVERY HERE</a>
+                                </div>
+                            </span>
+                        </label>
+                    </div>
+                    {% include 'user/checkout/edit-delivery-address.html' %}
+                    {% endfor %}
+                </div>
+                <a href="javascript:void(0)" onclick="add_new_checkout_address()">
+                    <div class="border border-secondary p-3 mt-3" id="add_new_checkout_address_btn_link">
+                        <h6 class="font-weight-bold">+ ADD A NEW ADDRESS</h6>
+                    </div>
+                </a>
+                {% include 'user/checkout/add-new-delivery-address.html' %}
+            </div>
+
+
+        </div>
+    </div>
+</div>

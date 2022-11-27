@@ -1,0 +1,140 @@
+
+{% if o.order_status.current_status  ==  1 %}
+<div class="col-lg-4 col-12">
+    <div class="d-flex">
+        <div class="rounded-circle border ml-2 text-center 
+        bg-success          
+        mt-1" style="height: 15px;width: 15px;"></div>
+        <span class="ml-3 font-weight-bold" style="font-size: 12px;">Order Confirmed on <small style="font-size: 11px;">{{o.order_status.order_confirmed_date}}</small></span>
+    </div>
+    <div class="mt-4" style="font-size: 11px;">
+        Your items has been Confrimed
+    </div>
+    {% if o.order_status.delivered %}
+    <div class="mt-4">
+        <svg width='16' height='19' version="1.1" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 18 18">
+            <g fill='none'>
+                <polygon id="Shape" fill="#2874F1"
+                    points="9 12.0625 13.6375 15.4375 11.8625 9.9875 16.5 6.6875 10.8125 6.6875 9 1.0625 7.1875 6.6875 1.5 6.6875 6.1375 9.9875 4.3625 15.4375" />
+                <polygon id="Shape" points="0 0 18 0 18 18 0 18" />
+            </g>
+        </svg>
+        <span><a href="{% url 'product:product_review' p.product.pk %}" class="font-weight-bold text-primary">Rate & Review Product</a></span>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+                
+
+
+{% if o.order_status.current_status  ==  2 %}
+<div class="col-lg-4 col-12">
+    <div class="d-flex">
+        <div class="rounded-circle border ml-2 text-center 
+        bg-success          
+        mt-1" style="height: 15px;width: 15px;"></div>
+        <span class="ml-3 font-weight-bold" style="font-size: 12px;">Shipped on <small style="font-size: 11px;">{{o.order_status.Shipped_date}}</small></span>
+    </div>
+    <div class="mt-4" style="font-size: 11px;">
+        Your items has been Shipped
+    </div>
+    {% if o.order_status.delivered %}
+    <div class="mt-4">
+        <svg width='16' height='19' version="1.1" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 18 18">
+            <g fill='none'>
+                <polygon id="Shape" fill="#2874F1"
+                    points="9 12.0625 13.6375 15.4375 11.8625 9.9875 16.5 6.6875 10.8125 6.6875 9 1.0625 7.1875 6.6875 1.5 6.6875 6.1375 9.9875 4.3625 15.4375" />
+                <polygon id="Shape" points="0 0 18 0 18 18 0 18" />
+            </g>
+        </svg>
+        <span><a href="{% url 'product:product_review' p.product.pk %}" class="font-weight-bold text-primary">Rate & Review Product</a></span>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+
+{% if o.order_status.current_status  ==  3 %}
+<div class="col-lg-4 col-12">
+    <div class="d-flex">
+        <div class="rounded-circle border ml-2 text-center 
+        bg-success          
+        mt-1" style="height: 15px;width: 15px;"></div>
+        <span class="ml-3 font-weight-bold" style="font-size: 12px;">Out for delivery on <small style="font-size: 11px;">{{o.order_status.out_for_delivery_date}}</small></span>
+    </div>
+    <div class="mt-4" style="font-size: 11px;">
+        Your items has been Out for delivery
+    </div>
+    {% if o.order_status.delivered %}
+    <div class="mt-4">
+        <svg width='16' height='19' version="1.1" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 18 18">
+            <g fill='none'>
+                <polygon id="Shape" fill="#2874F1"
+                    points="9 12.0625 13.6375 15.4375 11.8625 9.9875 16.5 6.6875 10.8125 6.6875 9 1.0625 7.1875 6.6875 1.5 6.6875 6.1375 9.9875 4.3625 15.4375" />
+                <polygon id="Shape" points="0 0 18 0 18 18 0 18" />
+            </g>
+        </svg>
+        <span><a href="{% url 'product:product_review' p.product.pk %}" class="font-weight-bold text-primary">Rate & Review Product</a></span>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+
+{% if o.order_status.current_status  ==  4 %}
+<div class="col-lg-4 col-12">
+    <div class="d-flex">
+        <div class="rounded-circle border ml-2 text-center 
+        bg-success          
+        mt-1" style="height: 15px;width: 15px;"></div>
+        <span class="ml-3 font-weight-bold" style="font-size: 12px;">Delivered on <small style="font-size: 11px;">{{o.order_status.delivered_date}}</small></span>
+    </div>
+    <div class="mt-4" style="font-size: 11px;">
+        Your items has been delivered
+    </div>
+    {% if o.order_status.delivered %}
+    <div class="mt-4">
+        <svg width='16' height='19' version="1.1" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 18 18">
+            <g fill='none'>
+                <polygon id="Shape" fill="#2874F1"
+                    points="9 12.0625 13.6375 15.4375 11.8625 9.9875 16.5 6.6875 10.8125 6.6875 9 1.0625 7.1875 6.6875 1.5 6.6875 6.1375 9.9875 4.3625 15.4375" />
+                <polygon id="Shape" points="0 0 18 0 18 18 0 18" />
+            </g>
+        </svg>
+        <span><a href="{% url 'product:product_review' p.product.pk %}" class="font-weight-bold text-primary">Rate & Review Product</a></span>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+
+{% if o.order_status.current_status  ==  5 %}
+<div class="col-lg-4 col-12">
+    <div class="d-flex">
+        <div class="rounded-circle border ml-2 text-center 
+                
+        mt-1"  style="height: 15px;width: 15px;background-color: red;"></div>
+        <span class="ml-3 font-weight-bold" style="font-size: 12px;">Cancelled on <small style="font-size: 11px;">{{o.order_status.cancelled_date}}</small></span>
+    </div>
+    <div class="mt-4" style="font-size: 11px;">
+        {{o.order_status.cancelReasons.reasons}}
+    </div>
+    {% if o.order_status.delivered %}
+    <div class="mt-4">
+        <svg width='16' height='19' version="1.1" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 18 18">
+            <g fill='none'>
+                <polygon id="Shape" fill="#2874F1"
+                    points="9 12.0625 13.6375 15.4375 11.8625 9.9875 16.5 6.6875 10.8125 6.6875 9 1.0625 7.1875 6.6875 1.5 6.6875 6.1375 9.9875 4.3625 15.4375" />
+                <polygon id="Shape" points="0 0 18 0 18 18 0 18" />
+            </g>
+        </svg>
+        <span><a href="{% url 'product:product_review' p.product.pk %}" class="font-weight-bold text-primary">Rate & Review Product</a></span>
+    </div>
+    {% endif %}
+</div>
+{% endif %}

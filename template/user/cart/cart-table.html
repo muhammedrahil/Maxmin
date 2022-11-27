@@ -1,0 +1,106 @@
+{% if user.is_authenticated %}
+{% for key,val in data.items %}
+<div class="row p-4" id="cart-{{key}}">
+    <div class="col-lg-2">
+        <div class="card m-1 img-responsive border border-dark" style="width: 6rem;  ">
+            <a href="javascript:void(0)"><img src="{{val.prod.product.images2.url}}" alt="" class="card-img-top"></a>
+        </div>
+        <a href="javascript:void(0)" onclick="delete_cart_items({{key}})"><i class="fa fa-trash-o"></i></a>
+
+    </div>
+    <div class="col-lg-4">
+        <p class="font-weight-bold h6 mt-5 ml-3">{{val.prod.product.product.product_name}}</p>
+
+        <p style="line-height: 20px;margin-bottom: 0px;"></p>
+        <span class="ml-3"><del>₹{{val.prod.unit_price}}</del></span>
+        <span class="font-weight-bold ml-3">₹{{val.prod.product_price}}</span>
+    </div>
+    <div class="col-lg-6">
+        <div class="row ">
+            <div class="col-lg-4 mt-2 ">
+                <div class="border rounded p-3 shadow-sm " style="height: auto;width:100px ;">
+                    {% for k in val.product_size %}
+                    {% if val.prod.product_quantity.id == k.id %}
+                    Size:<span class="font-weight-bold  ">{{k.product_size}}</span>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-lg-3 mt-3">
+                <div class="shadow-sm " id="qty_div-{{key}}">
+                    <select id="qty" onchange="quatity({{key}})" class="shadow-sm ">
+                        {% for s in val.stock %}
+                        {% if val.prod.product_qty == s %}
+                        <option value="{{s}}" selected>{{s}}</option>
+                        {% else %}
+                        <option value="{{s}}">{{s}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+
+                </div>
+            </div>
+            <div class="col-lg-5 mt-5">
+                <span class="product_total font-weight-bold h5">₹ <span
+                        id="sub_totel_price-{{key}}">{{val.prod.totel_qty_price}}</span></span>
+            </div>
+        </div>
+    </div>
+
+</div>
+<hr>
+{% endfor %}
+
+{% else %}
+
+{% for key,value in data.items %}
+<div class="row p-4" id="cart-{{key}}">
+    <div class="col-lg-2">
+        <div class="card m-1 img-responsive border border-dark" style="width: 6rem;  ">
+            <a href="javascript:void(0)"><img src="{{value.image}}" alt="" class="card-img-top"></a>
+        </div>
+        <a href="javascript:void(0)" onclick="delete_cart_items({{key}})" class="font-weight-bold"><i
+                class="fa fa-trash-o"></i></a>
+    </div>
+    <div class="col-lg-4">
+        <p class="font-weight-bold h6 mt-5 ml-3">{{value.cart_product}}</p>
+        <p style="line-height: 20px;margin-bottom: 0px;"></p>
+        <span class="ml-3"><del>₹{{value.unit_price}}</del></span>
+        <span class="font-weight-bold ml-3 ">₹{{value.price}}</span>
+    </div>
+    <div class="col-lg-6">
+        <div class="row ">
+            <div class="col-lg-4 mt-2 ">
+                <div class="border rounded p-3 shadow-sm " style="height: auto;width:100px ;">
+                    {% for keys,value in value.prod_size.items %}
+                    {% for i,val in value.items %}
+                    {% if key == keys %}
+                    Size:<span class="font-weight-bold">{{val}}</span>
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-lg-3 mt-3">
+                <div class="" id="qty_div-{{key}}">
+                    <select id="qty" onchange="quatity({{key}})">
+                        {% for i in value.stock %}
+                        {% if i == value.product_qty %}
+                        <option value="{{i}}" selected>{{i}}</option>
+                        {% else %}
+                        <option value="{{i}}">{{i}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-5 mt-5">
+                <span class="product_total font-weight-bold h5">₹ <span
+                        id="sub_totel_price-{{key}}">{{value.sub_totel_price}}</span></span>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+{% endfor %}
+{% endif %}

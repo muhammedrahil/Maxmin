@@ -1,0 +1,30 @@
+
+    <h4 class="ml-2 font-weight-bold">Price Deatails</h4>
+    <hr>
+    <div class="coupon_inner">
+        <div class="cart_subtotal ">
+            <p>Totel Unit Price</p>
+            <p class="cart_amount  font-weight-bold">₹ <span
+                    class="totel-savings "> <del>{{Totel_unit_price}}</del></span></p>
+        </div>
+        <div class="cart_subtotal">
+            <h5 class="font-weight-bold">Price (<span class="cart-count-lenght">{{length_product}}</span> items)</h5>
+                <p class="cart_amount">₹ <span class="totel-price font-weight-bold"> {{totel_price}}</span></p>
+        </div>
+        <div class="cart_subtotal ">
+            <p>Discount</p>
+            <p class="cart_amount text-success font-weight-bold">₹ <span class="totel-savings ">{{savings}}</span></p>
+        </div>
+        <div class="cart_subtotal ">
+            <p>Delivery Charges</p>
+            <p class="cart_amount"><span> ₹00.00</span></p>
+        </div>
+        <hr>
+        <div class="cart_subtotal">
+            <h4 class="font-weight-bold">Total Payable</h4>
+            <p class="cart_amount font-weight-bold">₹ <span class="totel-price" id="totel_payment_price">{{totel_price}}</span></p>
+        </div>
+        <h6 class="text-center text-success font-weight-bold ">You will save on this order ₹<span class="totel-savings">{{savings}}</span></h6>
+        <hr>
+
+    </div>

@@ -1,0 +1,91 @@
+{% load static %}
+<div class="modal fade" id="addproduct_model" tabindex="-1" role="dialog" aria-labelledby="addModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModal-size">Add Product </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="#" id="add_product_basics" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="inputEmail">Product Name</label>
+                        <input id="" type="text" name="product_name" required="" placeholder="Enter Product Name"
+                            class="form-control">
+                    </div>
+                    <div class="card" style="width: 15rem;">
+                        <div class="preview">
+                            <img id="file-ip-3-preview" src="{% static 'adm/assets/images/no-image.jpg' %}"
+                                style="height:13rem ; width:13rem ;">
+                        </div>
+                        <div class="card-body" style="width:8rem ;">
+                            <input type="file" title=" " name="product_image" id="file-ip-3" required
+                                accept="image/*" onchange="showPreview(event, 'file-ip-3-preview');">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword">Unit Price</label>
+                        <input id="inputPassword" type="number" placeholder="Unit Price" name="unit_price" required=""
+                            class="form-control">
+                    </div>
+                    <label for="" class="font-weight-bold text-dark">Select Gender category</label>
+                    <div class="form-group">
+                        {% for c in gender %}
+                        <label for="" class="m-2">{{c.gender | title}}</label>
+                        <input type="checkbox" placeholder=" gender" id="{{c.pk}}" value="{{c.pk}}"
+                            name="gender_category" class="brand_category" data-filter="brandcategory">
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="input-select">Select Category</label>
+                        <select class="form-control" id="" name="product_caregory">
+                            {% for k,v in category.items %}
+                            <option value="" disabled selected hidden>Select Category</option>
+                            <optgroup label="{{k.category}}">
+                                {% for s in v %}
+                                <option value="{{s.pk}}">{{s.category}}</option>
+                                {% endfor %}
+                            </optgroup>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="input-select">Select Brand</label>
+                        <select class="form-control" id="" name="product_brand">
+                            <option value="" disabled selected hidden>Select Brand</option>
+                            {% for b in brand %}
+                            <option value="{{b.pk}}">{{b.title}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" id="add-product-description" rows="3" name="description" name=""
+                            placeholder="Enter description"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 pb-2 pb-sm-4 pb-lg-0 pr-0">
+                            <label class="be-checkbox custom-control custom-checkbox">
+
+                            </label>
+                        </div>
+                        <div class="col-sm-6 pl-0">
+                            <p class="text-right">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-space btn-primary">Submit</button>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>

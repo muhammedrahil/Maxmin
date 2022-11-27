@@ -1,0 +1,68 @@
+{% extends "user/base-layout.html" %}
+
+{% block content %}
+
+
+<div class="customer-login mb-5 mt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-3"></div>
+      <div class="col-lg-6 col-md-6">
+        <div class="account_form border" data-aos="fade-up" data-aos-delay="0">
+          <form action="" method="POST">
+            {% csrf_token %}
+            
+            <div class="default-form-box">
+                <label>OTP<span>*</span></label>
+               <input type="number" name="otp" placeholder="Enter Your OTP Number">
+            </div>
+            <button class="btn btn-md btn-black-default-hover mb-4 col-lg-12 col-md-12" type="submit">Verify </button>
+            <a href="#" onclick="resent_otp({{phone_no}},{{uid}})"><u>Resend OTP</u> </a>
+          </form>
+
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-3"></div>
+
+      <!--login area start-->
+    </div>
+  </div>
+</div> <!-- ...:::: End Customer Login Section :::... -->
+{% endblock %}
+
+{% block script %}
+
+<script>
+  function resent_otp(phone_no,uid){
+    console.log(phone_no,uid)
+    $.ajax({
+            url: '{% url "accounts:resent_otp" %}',
+            data: {
+                'uid': uid,
+                'phone_no':phone_no,
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.status) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Otp Resend Success fully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                } else {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Deactivate Success fully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            }
+        });
+  }
+</script>
+
+{% endblock %}

@@ -1,0 +1,165 @@
+{% extends "user/base-layout.html" %}
+{% load static %}
+{% block static %}
+<style>
+    .checked {
+        color: orange;
+    }
+
+    .image-box .image-link .product-img {
+        height: 50vh;
+        max-width: 50vh;
+    }
+
+    @media only screen and (max-width: 768px) {
+        .product-default-single-item .image-box {
+            max-height: 30vh;
+            max-width: 50vh;
+        }
+
+        .image-box .image-link .product-img {
+            max-height: 20vh;
+            max-width: 40vh;
+        }
+
+        .product-default-single-item .content .content-left .review-star,
+        .title {
+            font-size: 10px;
+        }
+
+        .product-default-single-item .content .content-right .price,
+        .text-success {
+            font-size: 10px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container" style="height: 70px;"></div>
+
+
+<!-- ...:::: Start Shop Section:::... -->
+<div class="shop-section">
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-3 col-4">
+                <!-- Start Sidebar Area -->
+                <div class="siderbar-section" data-a os="fade-up" data-aos-delay="0">
+                    {% include 'user/products/filter.html' %}
+                </div>
+                <div class="col-lg-9 col-8">
+                    <!-- Start Tab Wrapper -->
+                    <div class="sort-product-tab-wrapper">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="tab-content tab-animate-zoom">
+                                        {% include 'user/products/grid-view.html' %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!-- End Tab Wrapper -->
+
+                    {% if lenght_product %}
+                    <!-- Start Pagination -->
+                    <div class="page-pagination text-center" data-aos="fade-up" data-aos-delay="0">
+                        <ul>
+                            {% if products.has_previous %}
+                            <li><a href="?page={{ products.previous_page_number }}"><i class="fa fa-long-arrow-left"
+                                        aria-hidden="true"></i></a></li>
+
+                            <li><a href="?page=1">1</a></li>
+                            {% endif %}
+                            <li><a href="?page={{ products.number }}" class="active">{{ products.number }}</a></li>
+                            {% if products.has_next %}
+
+                            <li><a href="?page={{ products.next_page_number }}"><i class="ion-ios-skipforward"></i></a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div> <!-- End Pagination -->
+                    {% else %}
+                    <div class="empty-cart-section section-fluid mb-4">
+                        <div class="emptycart-wrapper">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3">
+                                        <div class="emptycart-content text-center">
+                                            <div class="image">
+                                                <img class="img-fluid"
+                                                    src="https://www.svgs.co/templates/default-new/images/no-product-found.png"
+                                                    alt="">
+                                            </div>
+                                            <h6 class="sub-title">Sorry Mate... No item Found !</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+
+                </div>
+            </div>
+        </div>
+    </div> <!-- ...:::: End Shop Section:::... -->
+    {% endblock %}
+
+
+
+    {% block script %}
+
+    <script>
+        $(document).ready(function () {
+            $(".ajaxLoader").hide();
+            var _filterObj = {}
+            $(".filter-checkbox").on('click', function () {
+                var _main_c_id = $('#main_c_id').val();
+                _filterObj.category_id = _main_c_id;
+                $(".filter-checkbox").each(function (index, ele) {
+                    var _filterVal = $(this).val();
+                    var _filterKey = $(this).data('filter');
+                    _filterObj[_filterKey] = Array.from(document.querySelectorAll('input[data-filter=' + _filterKey + ']:checked')).map(function (el) {
+                        return el.value;
+                    });
+                });
+                console.log(_filterObj)
+                $.ajax({
+                    url: "{% url 'product:filter_data' %}",
+                    type: "GET",
+                    data: _filterObj,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        $(".ajaxLoader").show();
+                    },
+                    success: function (res) {
+
+                        $("#filteredProducts").html(res.data);
+                        $(".ajaxLoader").hide();
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $("#price").on('submit', function (e) {
+                e.preventDefault() 
+                var _main_c_id = $('#main_c_id').val();
+                let form = document.getElementById('price')
+        let formdata = new FormData(form)
+        formdata.append('category_id',_main_c_id)
+        console.log([...formdata])
+        axios.post("{% url 'product:filterprice' %}", formdata).then((res) => {
+            $("#filteredProducts").html(res.data.data);
+        })
+            })
+        })
+
+    </script>
+
+    {% endblock %}

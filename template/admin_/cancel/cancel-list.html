@@ -1,0 +1,36 @@
+<table id="example" class="table table-striped table-bordered first " style="width:100%"> 
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Resons</th>
+      <th>Created date</th>
+      <th>Active</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in cancel_resons %}
+    <tr>
+      <td>{{forloop.counter}}</td>  
+      <td>{{i.reasons | title}}</td>  
+      <td>{{i.created_date}}</td>  
+      <td>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+                onclick="cancel_is_active({{i.pk}})" {% if i.is_active %} checked {% endif %}>
+        </div>
+    </td>
+    <td class=" ">
+        <a class="ml-1" href="javascript:void(0)" title="Edit" data-toggle="tooltip"><i
+                class="fa fa-edit color-muted" data-toggle="modal" data-target="#edit_cancel_Modal-{{i.pk}}"></i>
+        </a>
+
+        <a href="#" onclick="cencel_delete({{i.pk}})" class="ml-1" data-toggle="tooltip"
+            data-placement="top" title="Delete"><i class="fa fa-trash color-danger"></i></a>
+    </td>
+    {% include 'admin_/cancel/edit-cancel.html' %}
+
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

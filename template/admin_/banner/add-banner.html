@@ -1,0 +1,56 @@
+{% load static %}
+<div class="modal fade" id="add-banner_modal-{{i.pk}}" tabindex="-1" role="dialog" aria-labelledby="addModal"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="add-sub-size-quantity">Add Banner</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'landing:add_banner' i.pk %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <div class="card text-center ml-3" style="width: 27rem;">
+            <div class="preview">
+              <img id="file-ip-3-preview{{i.pk}}" src="{% static 'adm/assets/images/no-image.jpg' %}"
+                style="height:18rem ; width:27rem ;">
+            </div>
+            <input type="file" title=" " name="banner_image" id="file-ip-3" required accept="image/*"
+              onchange="showPreview(event, 'file-ip-3-preview{{i.pk}}');">
+          </div>
+
+
+          <div class="input-group-text mb-2">
+            <label class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" value="1" name="banner"><span class="custom-control-label">Hero Banner</span>
+            </label>
+          </div>
+          <div class="input-group-text mb-2">
+            <label class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" value="2" name="banner"><span class="custom-control-label">Main Banner</span>
+            </label>
+          </div>
+          <div class="input-group-text mb-2">
+            <label class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" value="3" name="banner"><span class="custom-control-label">Center Banner</span>
+            </label>
+          </div>
+          <div class="input-group-text mb-2">
+            <label class="custom-control custom-radio">
+              <input type="radio" class="custom-control-input" value="4" name="banner"><span class="custom-control-label">Small Banner</span>
+            </label>
+          </div>
+          <div class="float-right">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" onclick="" class="btn btn-primary">save</button>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>

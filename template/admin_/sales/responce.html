@@ -1,0 +1,14 @@
+
+    {% for i in order %}
+    {% for j in i.order.products.all %}
+    <tr>
+      <td>{{i.order.orders_id}}</td>
+      <td>{{i.order.order_date}}</td>
+      <td>{{j.product.product.product_name}}</td>
+      <td>{{j.unit_price}}</td>
+      <td>{{j.product_price}}</td>
+      <td>{{j.product_qty}}</td>
+      <td>{{j.totel_qty_price}}</td>
+    </tr>
+    {% endfor %}
+    {% endfor %}

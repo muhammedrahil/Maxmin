@@ -1,0 +1,127 @@
+<div class="border p-3 mt-3 edit_checkout_address" style="display: none;" id="edit_checkout_address-{{u.id}}">
+    <form action="javascript:void(0)" onsubmit="edit_checkout_address_form({{u.id}})" id="add_checkout_new_address_form_add-{{u.id}}">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="default-form-box mb-20">
+                    <label>Name</label>
+                    <input type="text" name="address_name"  value="{{u.name}}">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="default-form-box mb-20">
+                    <label>Phone Number</label>
+                    <input type="number" name="address_phone_no"  value="{{u.phone_no}}">
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="default-form-box mb-20">
+                    <label>Pincode</label>
+                    <input type="number" name="address_pincode" value="{{u.pincode}}">
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="default-form-box mb-20">
+                    <label>Locality</label>
+                    <input type="text" name="address_locality"  value="{{u.locality}}">
+                </div>
+            </div>
+
+
+            <div class="default-form-box mb-20">
+                <label>Address</label>
+                <input type="text" name="address_address"  value="{{u.address}}">
+            </div>
+
+            <div class="col-lg-6">
+                <div class="default-form-box mb-20">
+                    <label>City/District/Town</label>
+                    <input type="text" name="address_city_district_town"  value="{{u.city_district_town}}">
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="default-form-box mb-20">
+                    <label>State</label>
+                    <select class="form-select" name="state" required >
+                        <option value="" disabled="">--Select State--</option>
+                        <option value="{{u.state}}">{{u.state}}</option>
+                        <option value="Andaman &amp; Nicobar Islands">Andaman &amp; Nicobar Islands</option>
+                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                        <option value="Assam">Assam</option>
+                        <option value="Bihar">Bihar</option>
+                        <option value="Chandigarh">Chandigarh</option>
+                        <option value="Chhattisgarh">Chhattisgarh</option>
+                        <option value="Dadra &amp; Nagar Haveli &amp; Daman &amp; Diu">Dadra &amp; Nagar Haveli
+                            &amp; Daman &amp; Diu
+                        </option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Goa">Goa</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="Haryana">Haryana</option>
+                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                        <option value="Jammu &amp; Kashmir">Jammu &amp; Kashmir</option>
+                        <option value="Jharkhand">Jharkhand</option>
+                        <option value="Karnataka">Karnataka</option>
+                        <option value="Kerala">Kerala</option>
+                        <option value="Ladakh">Ladakh</option>
+                        <option value="Lakshadweep">Lakshadweep</option>
+                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Manipur">Manipur</option>
+                        <option value="Meghalaya">Meghalaya</option>
+                        <option value="Mizoram">Mizoram</option>
+                        <option value="Nagaland">Nagaland</option>
+                        <option value="Odisha">Odisha</option>
+                        <option value="Puducherry">Puducherry</option>
+                        <option value="Punjab">Punjab</option>
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Sikkim">Sikkim</option>
+                        <option value="Tamil Nadu">Tamil Nadu</option>
+                        <option value="Telangana">Telangana</option>
+                        <option value="Tripura">Tripura</option>
+                        <option value="Uttarakhand">Uttarakhand</option>
+                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                        <option value="West Bengal">West Bengal</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="default-form-box mb-20">
+                    <label>Landmark</label>
+                    <input type="text" name="address_landmark"  value="{{u.landmark}}">
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="default-form-box mb-20">
+                    <label>Alternate Phone Number</label>
+                    <input type="number" name="address_alt_phone_no"  value="{{u.alt_phone_no}}">
+                </div>
+            </div>
+        </div>
+        <div class="input-radio default-form-box mb-20">
+            <label>Address Type</label>
+            <span class="custom-radio"><input type="radio" value="Home" 
+                {% if u.address_type == 'Home' %} checked {% endif %}
+                    name="edit_addresstype">Home</span>
+
+            <span class="custom-radio"><input type="radio" value="Work" 
+                {% if u.address_type == 'Work' %} checked {% endif %}
+                    name="edit_addresstype">Work</span>
+        </div> <br>
+        <button type="submit" class="btn btn-primary text-white " id="submit_checkout_edit_address-{{u.id}}">
+            <span id="">
+                Save
+            </span>
+            <div class="spinner-border" role="status" id="spinner_address-{{u.id}}" style="display: none;">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </button>
+        <a href="javascript:void(0)" class="btn btn-primary text-white"
+            onclick="checkout_edit_cencel_address({{u.id}})">Cancel</a>
+    </form>
+</div>

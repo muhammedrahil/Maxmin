@@ -1,0 +1,29 @@
+<div>
+    <div class="form-group">
+        <label for="inputEmail">SKU</label>
+        <input id="" type="text" name="sub_product_sku" value="{{sub_prod.sku}}"  required placeholder="Enter SKU" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="inputPassword">Offer Price</label>
+        <input id="" type="number" placeholder="Enter Offer Price" value="{{sub_prod.offerprice}}" name="sub_product_offer_price" required
+            class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="input-select">Select Color</label>
+        <select class="form-control" id="" name="sub_product_colors" required>
+            <option value="" disabled selected hidden>Select Color</option>
+            {% for c in color %}
+            <option value="{{c.pk}}" style="color: {{c.color_code}};" 
+            {% if sub_prod.product_color.pk == c.pk  %}
+            selected
+            {% endif %}
+            >{{c.title | title}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="inputPassword">Offer Expiry Date</label>
+        <input id="" type="datetime-local" placeholder="Enter Offer expiry date" value="{{sub_prod.offer_expiry_date |date:'Y-m-d H:i' }}" id="sub_product_offer_expiry_date_id" name="sub_product_offer_expiry_date"
+        required class="form-control">
+    </div>
+</div>

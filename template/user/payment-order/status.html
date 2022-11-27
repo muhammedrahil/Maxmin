@@ -1,0 +1,49 @@
+
+
+            <div class="page-content page-container" id="display_block">
+                {% if orderstatus.order_confirmed %}
+                <div class="tl-item">
+                    <div class="tl-dot b-primary"></div>
+                    <div class="tl-content ">
+                        <div class=" text-success font-weight-bold">Order Confrimed</div>
+                        <div class="tl-date text-muted mt-1 ">{{orderstatus.order_confirmed_date}}</div>
+                    </div>
+                </div>
+                {% endif %}
+                {% if orderstatus.Shipped %}
+                <div class="tl-item">
+                    <div class="tl-dot b-primary"></div>
+                    <div class="tl-content ">
+                        <div class=" text-success font-weight-bold"> Shipped</div>
+                        <div class="tl-date text-muted mt-1 ">{{orderstatus.Shipped_date}}</div>
+                    </div>
+                </div>
+                {% endif %}
+                {% if orderstatus.out_for_delivery %}
+                <div class="tl-item">
+                    <div class="tl-dot b-primary"></div>
+                    <div class="tl-content ">
+                        <div class=" text-success font-weight-bold"> out_for_delivery</div>
+                        <div class="tl-date text-muted mt-1 ">{{orderstatus.out_for_delivery_date}}</div>
+                    </div>
+                </div>
+                {% endif %}
+                {% if orderstatus.delivered %}
+                <div class="tl-item">
+                    <div class="tl-dot b-primary"></div>
+                    <div class="tl-content ">
+                        <div class=" text-success font-weight-bold"> delivered</div>
+                        <div class="tl-date text-muted mt-1 ">{{orderstatus.delivered_date}}</div>
+                    </div>
+                </div>
+                {% endif %}
+                {% if orderstatus.Cancelled %}
+                <div class="tl-item">
+                    <div class="tl-dot b-danger"></div>
+                    <div class="tl-content ">
+                        <div class=" text-danger font-weight-bold"> Cancelled</div>
+                        <div class="tl-date text-muted mt-1 ">{{orderstatus.cancelled_date}}</div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>

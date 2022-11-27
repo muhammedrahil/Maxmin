@@ -1,0 +1,10 @@
+
+<span>Quantity</span>
+<div class="product-variable-quantity">
+    <select  name="qty" id="qty" class="qty form-select">
+        {% for i in data %}
+        <option value="{{i}}">{{i}}</option>
+        {% endfor %}
+    </select>
+</div>
+

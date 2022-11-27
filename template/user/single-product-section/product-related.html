@@ -1,0 +1,99 @@
+
+
+ <!-- Start Section Content Text Area -->
+ <div class="product-wrapper mb-5" data-aos="fade-up" data-aos-delay="0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="product-slider-default-1row default-slider-nav-arrow">
+                    <!-- Slider main container -->
+                    <div class="swiper-container product-default-slider-4grid-1row">
+                        <!-- Additional required wrapper -->
+                        <div class="swiper-wrapper">
+                            <!-- End Product Default Single Item -->
+                            <!-- Start Product Default Single Item -->
+                            {% for p in related_products %}
+                            
+                          
+                            <div class="product-default-single-item product-color--golden swiper-slide">
+                                <div class="image-box">
+                                    <a href="{{p.get_absolute_url}}" class="image-link" target="_blank">
+                                        <img src="{{p.images.url}}" style="height:55vh ; max-width:50vh ;" alt="">
+                                        <img src="{{p.images2.url}}" style="height:55vh ; max-width:50vh ;" alt="">
+                                    </a>
+                                </div>
+                                <div class="content">
+                                    <div class="content-left">
+                                        <h6 class="title">{{p.product.product_name}}</h6>
+                                        <ul class="review-star">
+                                            {% if p.rating == 0 %}
+                                            <span class="fa fa-star "></span>
+                                            <span class="fa fa-star "></span>
+                                            <span class="fa fa-star "></span>
+                                            <span class="fa fa-star "></span>
+                                            <span class="fa fa-star "></span>
+            
+                                            {% endif %}
+                                            {% if p.rating == 1 %}
+                                            <span class="fa fa-star checked"></span>
+                                             <span class="fa fa-star "></span>
+                                            <span class="fa fa-star "></span>
+                                            <span class="fa fa-star "></span>
+                                            <span class="fa fa-star "></span>
+            
+                                            {% endif %}
+                                            {% if p.rating == 2 %}
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star "></span>
+                                            <span class="fa fa-star "></span>
+                                            <span class="fa fa-star "></span>
+            
+                                            {% endif %}
+                                            {% if p.rating == 3 %}
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star "></span>
+                                            <span class="fa fa-star "></span>
+            
+                                            {% endif %}
+                                            {% if p.rating == 4 %}
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star "></span>
+            
+                                            {% endif %}
+                                            {% if p.rating == 5 %}
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            <span class="fa fa-star checked"></span>
+                                            {% endif %}
+                                            
+
+                                        </ul>
+                                    </div>
+                                    <div class="content-right">
+                                        <span class="price"><del>₹{{p.product.unit_price}}</del>₹{{p.offerprice}}</span>
+                                        <span class="text-success">{{p.offer_persentage}}% off</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- End Product Default Single Item -->
+                            <!-- Start Product Default Single Item -->
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <!-- If we need navigation buttons -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

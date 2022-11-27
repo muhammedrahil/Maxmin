@@ -1,0 +1,437 @@
+{% extends "user/base-layout.html" %}
+{% load static %}
+
+{% block static %}
+<style>
+    @media screen and (min-width:1200px) {
+        .delivery-address-mediaquary {
+            width: 690px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container" style="height: 70px;"></div>
+
+<!-- ...:::: Start Account Dashboard Section:::... -->
+<div class="account-dashboard mb-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-9 col-lg-8">
+                <div class="tab-content dashboard_content " data-aos="fade-up" data-aos-delay="200">
+                    {% include 'user/checkout/login.html' %}
+                    {% include 'user/checkout/delivery-address.html' %}
+                    {% include 'user/checkout/order-summery.html' %}
+                    {% include 'user/order/payment.html' %}
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-3 col-lg-4">
+                <!-- Tab panes -->
+                <div class="tab-content dashboard_content border shadow-sm bg-light p-2" id="totels_section"
+                    data-aos="fade-up" data-aos-delay="200">
+                    <div id="all-checkout-totel-and-order-totel ">
+                        {% if order.coupen_active == True %}
+                        {% include 'user/order/order-totel.html' %}
+                        {% else %}
+                        {% include 'user/checkout/checkout-totel.html' %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- ...:::: End Account Dashboard Section:::... -->
+{% endblock %}
+
+{% block script %}
+<script
+    src="https://www.paypal.com/sdk/js?client-id=AZkrzOLPXYuuZCdeJBiSxvJun4280E7CYQOZ5GB-wZfQCkIXb4xJ6KGAx38O69VG9t20uTvGMqvkSZhx&currency=USD"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+
+    function login_Change() {
+        document.getElementById('login_check').style.display = 'none';
+        document.getElementById('login_Change').style.display = 'none';
+        let login = document.getElementsByClassName('checkout_login');
+        for (let i = 0; i < login.length; i++) {
+            login[i].style.display = 'block';
+        }
+    }
+
+    function Continue_Checkout() {
+        document.getElementById('login_check').style.display = 'block';
+        document.getElementById('login_Change').style.display = 'block';
+        let login = document.getElementsByClassName('checkout_login');
+        for (let i = 0; i < login.length; i++) {
+            login[i].style.display = 'none';
+        }
+        document.getElementById('checkout_address').style.display = 'block';
+    }
+
+    function check_checkout_address(id) {
+        let delivery_address_btn = document.getElementsByClassName('delivery_address_btn');
+        for (let i = 0; i < delivery_address_btn.length; i++) {
+            delivery_address_btn[i].style.display = 'none';
+        }
+        document.getElementById('delivery_address_btn-' + id).style.display = 'block'
+        document.getElementById('add_new_checkout_address_form').style.display = 'none'
+        document.getElementById('add_new_checkout_address_btn_link').style.display = 'block'
+
+    }
+
+    function check_checkout_address_check_Change() {
+        document.getElementById('checkout_address').style.display = 'block';
+    }
+
+
+    function delivery_address(id) {
+        $.ajax({
+            type: "POST",
+            url: "{% url 'cart:delivery_address' %}",
+            data: {
+                id, csrfmiddlewaretoken: '{{ csrf_token }}', dataType: "json",
+            },
+            success: function (res) {
+                $("#delivery-address-form #checkout_delivery_address").html(res.data);
+                document.getElementById('checkout_items_list_order_summry').style.display = 'block';
+                document.getElementById('check_checkout_address_check').style.display = 'block';
+                document.getElementById('check_checkout_address_check_Change').style.display = 'block';
+                document.getElementById('checkout_address').style.display = 'none';
+            },
+        });
+    }
+
+    function edit_checkout(id) {
+        let edit_checkout_address = document.getElementsByClassName('edit_checkout_address');
+        for (let i = 0; i < edit_checkout_address.length; i++) {
+            edit_checkout_address[i].style.display = 'none';
+        }
+        document.getElementById('edit_checkout_address-' + id).style.display = 'block'
+        let list_checkout_address = document.getElementsByClassName('list_checkout_address');
+        for (let i = 0; i < list_checkout_address.length; i++) {
+            list_checkout_address[i].style.display = 'block';
+        }
+        document.getElementById('list_checkout_address-' + id).style.display = 'none'
+        let delivery_address_btn = document.getElementsByClassName('delivery_address_btn');
+        for (let i = 0; i < delivery_address_btn.length; i++) {
+            delivery_address_btn[i].style.display = 'none';
+        }
+    }
+
+    function checkout_edit_cencel_address(id) {
+        document.getElementById('edit_checkout_address-' + id).style.display = 'none'
+        document.getElementById('list_checkout_address-' + id).style.display = 'block'
+    }
+
+    function edit_checkout_address_form(id) {
+        let form = document.getElementById('add_checkout_new_address_form_add-' + id)
+        let formdata = new FormData(form)
+        console.log([...formdata])
+        formdata.append('id', id)
+        axios.post("{% url 'accounts:edit_address' %}", formdata).then((res) => {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your Edit successfully',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            window.location.reload()
+        })
+    }
+
+
+    function add_new_checkout_address() {
+        document.getElementById('add_new_checkout_address_form').style.display = 'block'
+        document.getElementById('add_new_checkout_address_btn_link').style.display = 'none'
+    }
+    function add_new_checkout_address_btn_link_cancel() {
+        document.getElementById('add_new_checkout_address_form').style.display = 'none'
+        document.getElementById('add_new_checkout_address_btn_link').style.display = 'block'
+    }
+
+    function add_checkout_new_address_form() {
+        let form = document.getElementById('add_checkout_new_address_form_add')
+        let formdata = new FormData(form)
+        console.log([...formdata])
+        axios.post("{% url 'accounts:user_address_deatails' %}", formdata).then((res) => {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your address has been saved',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            window.location.reload()
+        })
+    }
+
+
+    function delete_checkout_items(cart_id) {
+        console.log(cart_id)
+        $.ajax({
+            type: "POST",
+            url: "{% url 'cart:delete_checkout_items' %}",
+            data: {
+                cart_id, csrfmiddlewaretoken: '{{ csrf_token }}', dataType: "json",
+            },
+            success: function (res) {
+                $("#checkout_items_list_order_summry #checkout_items_list_order_summry_items-" + cart_id).remove();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Delete Success fully',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                $('.cart-count-lenght').text(res.length_product);
+                $('.totel-price').text(res.totel_price);
+                $('.Totel_unit_price').text(res.Totel_unit_price);
+                $('.totel-savings').text(res.savings);
+            },
+        });
+    }
+
+    function order_submit() {
+        let address_id = $(".check_checkout_address:checked").val();
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You Continue Payment procedure",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'cart:continue_order' %}",
+                    data: {
+                        address_id, csrfmiddlewaretoken: '{{ csrf_token }}', dataType: "json",
+                    },
+                    success: function (res) {
+                        window.location.reload();
+                    },
+                });
+            }
+        })
+    }
+
+    function Coupon() {
+        document.getElementById('Coupon').style.display = 'block';
+        $('#Coupon_submit').on('submit', function (e) {
+            let Couponcode = $('#Couponcode').val();
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "{% url 'cart:coupon' %}",
+                data: {
+                    Couponcode, csrfmiddlewaretoken: '{{ csrf_token }}', dataType: "json",
+                },
+                success: function (res) {
+                    if (res.data) {
+                        $('#all-checkout-totel-and-order-totel').html(res.template)
+                        document.getElementById('coupen_disable').style.display = 'none';
+                        let timerInterval
+                        Swal.fire({
+                            title: 'Auto close alert!',
+                            html: 'I will close in <b></b> milliseconds.',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            didOpen: () => {
+                                Swal.showLoading()
+                                const b = Swal.getHtmlContainer().querySelector('b')
+                                timerInterval = setInterval(() => {
+                                    b.textContent = Swal.getTimerLeft()
+                                }, 100)
+                            },
+                            willClose: () => {
+                                clearInterval(timerInterval)
+                            }
+                        }).then((result) => {
+                            /* Read more about handling dismissals below */
+                            if (result.dismiss === Swal.DismissReason.timer) {
+                                window.location.href = "{% url 'cart:checkout' %}"
+                                console.log('I was closed by the timer')
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'coupen added',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                                window.location.reload();
+                            }
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: res.msg,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                },
+            });
+        });
+    }
+
+    function Cancelcoupen() {
+        document.getElementById('Coupon').style.display = 'none';
+    }
+
+    function cash_on_delivery() {
+        document.getElementById('cash_on_delivery_method_verify').style.display = 'block'
+        $.ajax({
+            type: "POST",
+            url: "{% url 'payment:cash_on_delivery_code_genarator'  %}",
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}', dataType: "json",
+            },
+            success: function (res) {
+                $("#cash_on_delivery_code_genarator").text(res.text_instence)
+                $("#cash_on_delivery_code_genarator_input").val(res.text_instence)
+                document.getElementById('cash_on_delivery_id').setAttribute('disabled', '')
+            },
+        });
+    }
+
+    function refresh_cash_on_delivery_code_genarator() {
+        $.ajax({
+            type: "POST",
+            url: "{% url 'payment:cash_on_delivery_code_genarator' %}",
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}', dataType: "json",
+            },
+            success: function (res) {
+                $("#cash_on_delivery_code_genarator").text(res.text_instence)
+                $("#cash_on_delivery_code_genarator_input").val(res.text_instence)
+            },
+        });
+    }
+
+    function cancel_cash_on_delivery_method() {
+        document.getElementById('cash_on_delivery_method_verify').style.display = 'none';
+        document.getElementById('cash_on_delivery_id').removeAttribute('disabled');
+    }
+
+
+    function CONFRIME_ORDER() {
+        let try_code = $("#try_code").val();
+        let test_code = $("#cash_on_delivery_code_genarator_input").val();
+        if (try_code === test_code) {
+            window.location.href = "http://{{callback_url}}/payments/cash-on-delivery-order-confrim/{{product_order_id}}/"
+        } else {
+            $("#error_part #error_massage").text('Incurrect text entered. Please try again.');
+            // messages timeout for 10 sec 
+            setTimeout(function () {
+                $('#error_part #error_massage').fadeOut('slow');
+            }, 4000); // <-- time in milliseconds, 1000 =  1 sec
+
+        }
+    }
+</script>
+
+<script>
+    function razepay_payment() {
+        let options = {
+            "key": "{{RAZORPAY_KEY_ID}}",
+            "amount": "{% widthratio totel_price 1 100 %}",
+            "currency": "INR",
+            "name": "MAX-MIN",
+            "description": "Test Transaction",
+            "image": "https://cdn.shopify.com/s/files/1/0003/0408/7087/files/logo_180x.png?v=1521532507",
+            'order_id': '{{order_id}}',
+            'callback_url': 'https://{{callback_url}}/payments/razorpay-payment/{{product_order_id}}/',
+            // "handler": function (response) {
+            //     alert(response.razorpay_payment_id);
+            //     alert(response.razorpay_order_id);
+            //     alert(response.razorpay_signature)
+            // },
+            "prefill": {
+                "name": "{{user_checkout_address}}",
+                "email": "{{request.user.email}}",
+                "contact": "{{request.user.phone_no}}"
+            },
+            "notes": {
+                "address": "Razorpay Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        let rzp1 = new Razorpay(options);
+        rzp1.on('payment.failed', function (response) {
+            alert(response.error.code);
+            alert(response.error.description);
+            alert(response.error.source);
+            alert(response.error.step);
+            alert(response.error.reason);
+            alert(response.error.metadata.order_id);
+            alert(response.error.metadata.payment_id);
+        });
+        rzp1.open();
+    }
+</script>
+
+
+
+<script>
+    // Render the PayPal button into #paypal-button-container
+    let a = "{{totel_price}}"
+    console.log(a)
+    inr = a / 75
+    inrs = inr.toFixed(2)
+    paypal.Buttons({
+        // Set up the transaction
+        createOrder: function (data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: inrs
+                    }
+                }]
+            });
+        },
+
+        // Finalize the transaction
+        onApprove: function (data, actions) {
+            return actions.order.capture().then(function (orderData) {
+                // console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                let transaction = orderData.purchase_units[0].payments.captures[0];
+                let payer = orderData.payer.payer_id
+                let product_order_session_id = '{{product_order_id}}';
+                let transaction_id = transaction.id
+                let transaction_status = transaction.status
+                let orderData_id = orderData.id
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'payment:paypal'  %}",
+                    data: {
+                        product_order_session_id,
+                        transaction_id,
+                        transaction_status,
+                        orderData_id,
+                        payer,
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        dataType: "json",
+                    },
+                    success: function (res) {
+                        let order_id = res.order_id
+                        let payment_id = res.payment_id
+                        let order_status_id = res.order_status_id
+                        window.location.href = 'http://{{callback_url}}/payments/order-placed/' + order_id + '/' + payment_id + '/' + order_status_id + ''
+                    },
+                });
+
+            });
+        }
+    }).render('#paypal-button-container');
+</script>
+
+
+
+{% endblock %}

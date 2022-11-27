@@ -1,0 +1,43 @@
+<table id="example" class="table table-striped table-bordered first " style="width:100%">  
+
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th>Gender</th>
+      <th>SignUp Date</th>
+      <th>Verification Type</th>
+      <th>Otp Number</th>
+      <th>Verification Date</th>
+      <th>Otp Attempt</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in user_list %}
+    <tr title="double click address section" style="cursor: pointer;" ondblclick="user_address({{i.user.pk}})">
+      <td>{{forloop.counter}}</td>  
+      <td>{{i.user.fullname | title}}</td>  
+      <td>{{i.user.email}}</td>  
+      <td>{{i.user.phone_no}}</td> 
+      <td>{{i.user.gender}}</td> 
+      <td>{{i.user.created_date}}</td>  
+      <td>{% if i.otp_verification %}
+      Otp Verification 
+      {% elif email_verification %}
+      Email Verification
+      {% endif %}</td>  
+      <td>{{i.otp}}</td>   
+      <td>{{i.verification_date}}</td>
+      <td>{{i.otp_attempt}}</td>
+      {% if i.user.is_active %}
+      <td><a href="javascript:void(0)" onclick="block_user({{i.user.pk}})" class="btn btn-danger">Block</a></td>
+      {% else %}
+      <td><a href="javascript:void(0)" onclick="Active_user({{i.user.pk}})" class="btn btn-success">Active</a></td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

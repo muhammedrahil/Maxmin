@@ -1,0 +1,42 @@
+ <!-- Start Modal Add cart -->
+ <div class="modal fade" id="modalAddcart" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col text-right">
+                            <button type="button" class="close modal-close" data-bs-dismiss="modal"
+                                aria-label="Close">
+                                <span aria-hidden="true"> <i class="fa fa-times"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="modal-add-cart-product-img">
+                                        <img class="img-fluid"
+                                            src="assets/images/product/default/home-1/default-1.jpg" alt="">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="modal-add-cart-info"><i class="fa fa-check-square"></i>Added to cart
+                                        successfully!</div>
+                                    <div class="modal-add-cart-product-cart-buttons">
+                                        <a href="{% url 'cart:cart' %}">View Cart</a>
+                                        <a href="{% url 'cart:checkout' %} ">Checkout</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 modal-border">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- End Modal Add cart -->
